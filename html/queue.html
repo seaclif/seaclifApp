@@ -1,0 +1,124 @@
+<template name="queue">
+    {{#if spectroCompDBReady}}
+        {{#with spectroCompDB}}
+            <div style="height: 142px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; background-color: #efeff4;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+
+                <div class="content-block-title" style="margin-top: 10px">Custom Barcodes</div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="list-block"
+                                 style="margin-bottom: 0px; width:60vw; margin-bottom: 20px; margin-top: -5px">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><img src="/img/barcode_icon.png"
+                                                                         style="height: 20px; width:auto;"></div>
+                                            <div class="item-inner" style="height: 43px;">
+                                                <div class="item-title label">Custom P Barcodes:</div>
+                                                <input type="number" class="printCustomBarcodeNumber" placeholder="30"
+                                                       value="50" style="width:50px"/>
+
+                                                <div class="item-after"><span class=" button button-fill color-yellow"
+                                                                              id="btnPrintP_barcodes">{{printDisplay}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><img src="/img/barcode_icon.png"
+                                                                         style="height: 20px; width:auto;"></div>
+                                            <div class="item-inner">
+                                                <div class="item-title label" name="">Custom Barcode:</div>
+                                                <div class="item-input">
+                                                    <input type="text" id="printCustomBarcode"
+                                                           class="printCustomBarcode" name="barcodeUser"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align: center; width: 25vw; padding-left: 8vw;">
+                                <img id="controlBarcode"
+                                     style="height:55px; padding-left: 10px; margin-top: -10px; padding-right: 10px; background-color: white;"
+                                     class="controlBarcode"
+                                     name="{{barcodeUserHere}}">
+
+                                <div class="item-title label">Print Every Time:</div>
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <label class="label-switch">
+                                            <input id="controlBarcodeEvery" type="checkbox" name="{{_id}}"/>
+
+                                            <div id="controlBarcodeEveryDiv" class="checkbox "></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="list-block" style="padding-bottom:0px; margin-top: 0px">
+                    <ul>
+                    </ul>
+                </div>
+
+            </div>
+        {{/with}}
+    {{/if}}
+
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="{{spectroCompDBReadyMargin}}">
+            {{#if barcodesReady}}
+                <div class="content-block-title">Barcode Queue</div>
+                <input type="button" id="submitForm" name="clearAll" value="Clear All"
+                       class="button button-big button-fill color-green"/>
+                {{#each locations}}
+                    {{#if hasBarcodes}}
+                        <div class="content-block-title">{{location}}</div>
+                        <div class="list-block">
+                            <ul>
+                                {{#each barcodes}}
+                                    <li class="swipeout">
+                                        <div class="swipeout-content item-content">
+                                            <div class="item-media"><img src="/img/barcode_icon.png"
+                                                                         style="height: 20px; width:auto;">
+                                            </div>
+                                            <div class="item-inner">
+                                                <label name="aBarcode" style="text-align: left;">{{this.user}}</label>
+                                                <label name="aBarcode"
+                                                       style="text-align: left;">{{prettifyDate dateTime}}</label>
+                                                <label name="aBarcode"
+                                                       style="text-align: left;">{{fromNow dateTime}}</label>
+
+                                                <div class="item-after"><span
+                                                        class="badgeNormal bg-gray">{{number}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swipeout-actions-right">
+                                            <a href="#" class="action2 bg-red" name="delete" id="{{_id}}">Delete</a>
+                                        </div>
+                                        <div class="swipeout-actions-left">
+                                            <a href="#" class="action1" id="{{_id}}">Scan</a>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                                <li class="swipeout">
+
+                                </li>
+                            </ul>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            {{else}}
+                Loading Barcodes ...
+            {{/if}}
+        </div>
+    </div>
+</template>

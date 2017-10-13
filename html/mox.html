@@ -1,0 +1,170 @@
+<template name="mox">
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content">
+            {{#if moxReady}}
+                {{#with moxActive}}
+
+                    <div class="row">
+
+                        <div class="col-80" style="margin-bottom: 5px;">
+
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; margin-right: 8px; margin-bottom:-12px; font-size: 13px"><a
+                            href='/mox/settings' id="{{id}}">Settings</a></div>
+                    <div style="text-align: left; margin-bottom: -10px; margin-left:10px">{{toiletName}}</div>
+                    <div style="text-align: center; margin-bottom: 10px; font-size: large">{{prettifyDateSecond nowTime}}</div>
+
+
+                    <div class="row">
+                        <div class="col-100">
+                            <input type="button" id="eventBtn" name="moxFart"
+                                   class="button button-big button-fill color-pink"
+                                   value="0 Gas" style="margin-top: 0px; height:14vh;"/>
+
+                            <div style="text-align: center; font-size: large;">{{prettifyDateSecond moxFart}} {{fromNowFart}}</div>
+                            <input type="button" id="eventBtn" name="moxPee"
+                                   class="button button-big button-fill {{colorUrine}}"
+                                   value="{{urineBtnTitle}}" style="margin-top: 10px; height:14vh;"/>
+
+                            <div style="text-align: center; font-size: large;">{{prettifyDateSecond moxPee}} {{fromNowPee}}</div>
+                            <input type="button" id="eventBtn" name="moxPoo"
+                                   class="button button-big button-fill color-blue"
+                                   value="2 Poop" style="margin-top: 10px; height:14vh;"/>
+
+                            <div style="text-align: center; font-size: large;">{{prettifyDateSecond moxPoo}} {{fromNowPoo}}</div>
+                            <input type="button" id="eventBtn" name="rgbSkid"
+                                   class="button button-big button-fill color-gray"
+                                   value="3 Flush Residual" style="margin-top: 10px; height:14vh;"/>
+
+                            <div style="text-align: center; font-size: large;">{{prettifyDateSecond rgbSkid}} {{fromNowSkid}}</div>
+                        </div>
+                    </div>
+                {{/with}}
+            {{else}}
+                Loading ....
+            {{/if}}
+        </div>
+    </div>
+
+</template>
+
+<template name="moxSettings">
+
+    <div class="page-content">
+        {{#if moxSettingsReady}}
+
+            <div class="row">
+
+                <div class="col-80" style="margin-bottom: 5px;">
+
+                </div>
+            </div>
+            <div style="text-align: left; margin-left: 8px; margin-bottom:-10px;">
+                <a href='/mox' id="{{id}}"> Back to Mox Events</a>
+            </div>
+
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">New Mox Toilet Location</div>
+                                <div class="item-input">
+                                    <select class="select" name="toiletName">
+                                        <option>..</option>
+                                        {{#each locations}}
+                                            <option {{locationsSelect location}}>{{location}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <a class="item-after" href="/locations">
+                                    <img src="/img/newLocationIcon.png" style="height: 29px; width:auto; margin-top:-7px">
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-100">
+                    <div class="content-block-title">Toilet</div>
+                </div>
+            </div>
+            {{#each moxToilets}}
+                <div class="row">
+                    <div class="col-100">
+                        <div style="margin-top: 10px; margin-left:33%; width:33%">
+                            <img src="../img/x-clear.png" class="xclear" id="deleteThisButton" name="{{_id}}"
+                                 style="margin-bottom:-26px; margin-top:-28px; margin-left: -4px; z-index: 3000; position: relative"/>
+                            <input type="button" id="moxToiletBtn" name="{{_id}}"
+                                   class="button button-big button-fill {{moxSelected _id}}"
+                                   value="{{toiletName}}"/>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+            {{#with currentToilet}}
+                <div class="list-block">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Path</div>
+                                    <div class="item-input">
+                                        <div name="choosePath">{{folderPath}}/</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Filename (*.csv)</div>
+                                    <div class="item-input">
+                                        <input type="text" name="filename" class="moxSettings" value="{{filename}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {{/with}}
+        {{/if}}
+    </div>
+</template>
+
+<template name="moxNotInUse">
+    <div style="height: 5px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; align-items: center; text-align: center; background-image: {{statusColor connectionStatus}}">
+    </div>
+
+    <div class="page-content">
+
+        <div class="row">
+
+            <div class="col-80" style="margin-bottom: 5px;">
+
+            </div>
+        </div>
+
+
+        <div>
+            <div>
+                <p style="font-size: large; margin-top: 50px;">No Mox sensor in Toilet, Please fill a cup and donate
+                    Today!</p>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+
+
+
+

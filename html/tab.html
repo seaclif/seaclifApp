@@ -1,0 +1,22 @@
+<template name="tabComputers">
+    <div class="toolbar tabbar tabbar-labels" style="box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.23)">
+
+        <div class="toolbar-inner">
+            <div class="left" style="padding-left: 20px; padding-bottom: 12px; padding-right: 20px;">
+                <a href='/configureInterface' id="configureInterfaceTab" class="tab-link active">
+                    <i class="icon tabIconAdd"></i>
+                </a>
+            </div>
+
+            {{#each controlComputer}}
+                <a href='/{{currentRoute}}/{{_id}}' id="{{_id}}" class="tab-link active {{selectedClass}}">
+                    <i class="icon tabIcon"></i>
+                    <span class="tabbar-label">{{hostname}}</span>
+                </a>
+            {{/each}}
+
+            <div style="padding-right: 55px;">
+            </div>
+        </div>
+    </div>
+</template>

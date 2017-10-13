@@ -1,0 +1,193 @@
+<body>
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+        <!--<p>Left panel content goes here</p>-->
+        <div style="width: 100%; text-align: center;"><p style="color: white; padding-right: 10px; font-size: 20px;"> Menu</p> </div>
+        <p><a href="/configureInterface" class="close-panel" style="padding-left: 10px; padding-right: 10px; font-size: 20px;">Configure Interface</a></p>
+        <!--<p><a href="/flowDemo" class="close-panel" style="padding-left: 10px; padding-right: 10px; font-size: 20px;">Flow Demo</a></p>-->
+        <p><a href="/locations" class="close-panel" style="padding-left: 10px; padding-right: 100px; font-size: 20px;">Locations</a></p>
+        <p><a href="/bluetooth" class="close-panel" style="padding-left: 10px; padding-right: 100px; font-size: 20px;">Bluetooth</a></p>
+        <p><a href="/usb" class="close-panel" style="padding-left: 10px; padding-right: 100px; font-size: 20px;">USB Ports</a></p>
+        <p><a href="/garage" class="close-panel" style="padding-left: 10px; padding-right: 100px; font-size: 20px;">Garage</a></p>
+        <p><a href="/bugsfeatures" class="close-panel" style="padding-left: 10px; padding-right: 10px; font-size: 20px;">Bugs/New Features</a></p>
+        <!--<p><a href="/flowvolume" class="close-panel" style="padding-left: 10px; padding-right: 10px; font-size: 20px;">Flow Volume Control</a></p>-->
+        <p><a href="/downloadapp" class="close-panel" style="padding-left: 10px; padding-right: 10px; font-size: 20px;">Download iOS app</a></p>
+        <div style="width: 100%; text-align: center;"><p style="color: #f7f7f7; padding-right: 10px font-size: 16px;">Databases</p> </div>
+        <div style="padding-left:5px">
+        </div>
+        <script>
+            var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+
+            $('.icon-back').on('touchstart', function(event){
+                if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                    history.back();
+                }
+            });
+
+            $('.icon-back').click(function(event){
+                if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+                else{
+                    history.back();
+                }
+            });
+
+            $('.logout').on('touchstart', function(event){
+                if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                    userCode.logout();
+                }
+            });
+
+            $('.logout').click(function(event){
+                console.log('ya hit loggin out man');
+                if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+                else{
+                    console.log('im loggin out man');
+                    userCode.logout();
+                }
+            });
+        </script>
+
+    </div>
+    <!-- Right panel with cover effect-->
+    <div class="panel panel-right panel-cover">
+        <div class="content-block">
+            <p>Right panel content goes here</p>
+        </div>
+    </div>
+    <!-- Views-->
+    <div class="views">
+
+        <!-- Your main view, should have "view-main" class-->
+        <div class="view view-main no-tabbar">
+            <!-- Top Navbar-->
+
+            <div class="navbar" style="background: #d3d3d3; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+
+                <div class="navbar-inner">
+                    {{> navBar}}
+                </div>
+            </div>
+            <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, data-page contains page name-->
+                <div data-page="index" class="page no-tabbar">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+
+
+                            <div class="left"><a href="#" class="back"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                            <div class="center sliding">Form</div>
+
+
+                        </div>
+                    </div>
+                    <div class="pages" id="mainLayoutPlace" style="background-color: #efeff4;">
+                        {{>mainLayout}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=.9, maximum-scale=1, minimum-scale=.9, width=device-width, height=device-height" />
+    <script type="text/javascript" src="/js/JsBarcode.js"></script>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="/css/framework7.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="/css/my-app.css">
+    <link rel="stylesheet" href="/css/dropStyle.css">
+
+    <script type="text/javascript" src="/js/framework7.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="/js/my-app.js"></script>
+</head>
+
+<template name="mainLayout">
+    <div style="height: 5px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; align-items: center; text-align: center; background-image: {{statusColorMS masterServerStatus}}">
+    </div>
+    {{#if masterServerIsReady}}
+        {{>Template.dynamic template=content}}
+    {{else}}
+    <div class="page-content" style="margin-top:20px">
+        Currently offline...
+    </div>
+    {{/if}}
+</template>
+
+<template name="navBar">
+    <div id="sidePanel"  class="left hideMe active {{authToShow}}">
+        <!-- Right link contains only icon - additional "icon-only" class-->
+        <a class="back" style="width: 20px" name="goBack"> <i class="icon icon-back" style="width: 12px"></i></a>
+        <a class="icon-only open-panel hideMe active {{authToShow}}" style="margin-left:0px"> <i class="icon icon-bars"></i></a>
+    </div>
+    <div class="urinos" style="color: white; text-align: center; width: 100px; position: absolute; margin-left:-65px; left:50%; padding-top:12px; ">
+        <a href="/" class="urinosTitle {{interfaceID}}"
+           style="height: 30px; display: inline-block; margin-left: auto; margin-right: auto; padding-right:0px;">
+            <img src="/img/seaclif-logo-sm.png" style="height: 25px; margin-top: -3px;">
+        </a>
+    </div>
+
+    <div id="" style="" class="right">
+        <!-- Right link contains only icon - additional "icon-only" class-->
+        <a href="/" id="{{currentUserID}}" class="logout currentUser" style="padding-right:5px;" onchange='subtractMe();'>{{currentUserNumber}}</a>
+    </div>
+    <script>
+        var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+
+        $('.icon-back').on('touchstart', function(event){
+            if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                history.back();
+            }
+        });
+
+        $('.icon-back').click(function(event){
+            if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+            else{
+                history.back();
+            }
+        });
+
+        $('.logout').on('touchstart', function(event){
+            if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                userCode.logout();
+            }
+        });
+
+        $('.logout').click(function(event){
+            console.log('ya hit loggin out man');
+            if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+            else{
+                console.log('im loggin out man');
+                userCode.logout();
+            }
+        });
+    </script>
+</template>
+
+<template name="profile">
+    <div style="height: 200px;"></div>
+    <div style="height: 100px;">
+        <p> This is the profile</p>
+        <input type="file" name="this" class="myFileInput" value="input file" style="height:100px;">
+        <p> This is the profile</p>
+    </div>
+</template>
+
+<template name="dbList">
+    {{#each db}}
+        <p><a href="/dbs/{{dbName}}" class="close-panel item-link" style="padding-left: 10px; padding-right: 100px;">{{name}}</a></p>
+    {{/each}}
+</template>
+
+
+
+
+
+

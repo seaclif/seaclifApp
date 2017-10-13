@@ -1,0 +1,371 @@
+<template name="usbWithTabs">
+    <div data-page="form" class="page" style="height:100%;">
+        {{#if createdReady}}
+            {{>usb}}
+            {{>tabComputers}}
+        {{else}}
+            Loading...
+        {{/if}}
+    </div>
+</template>
+
+<template name="usb">
+
+    {{#if connectionReady}}
+        {{#with usbport}}
+            {{> connectionStatus}}
+            <div class="page-content" style="padding-bottom: 100px;">
+                {{#if usbReady}}
+                <div style="width: auto; text-align: center; margin-top: 15px; font-size: 14px; text-transform: uppercase; color: #6d6d72;">{{thisLocation}}</div>
+                <div class="row" style="text-align: center">
+                    <div style="width: auto;"></div>
+                    <input type="button" id="flowcontrol" class="button button-fill color-green usbcontrol"
+                           name="refreshList" value="Refresh Port List"
+                           style="margin-top: 10px; width:175px;"/>
+
+                    <div style="width: auto"></div>
+                </div>
+
+
+                    {{#each usbportList}}
+                        {{#if isConnected}}
+                            <div class="content-block-title" style="padding-top: 2px; padding-bottom:2px;"> <span style="font-size: 12px;">{{_id}}:</span> {{portName}}
+                                <img src="{{displayImage}}" class="xclear" name="display"/>
+                            </div>
+
+                            {{#if displayMe}}
+                                <!--<div class="item-inner">
+                                    <div class="item-after"><span class="badge xclear">.</span>
+                                    </div>
+                                </div>-->
+                                <div class="list-block">
+                                    <div class="row" style="margin-bottom:10px">
+                                        <input type="button" id="flowcontrol" class="button button-fill usbcontrol"
+                                               name="openPort" value="{{openClose portStatus}}"
+                                               style="background-color: {{openCloseColor portStatus}}; margin-top: 10px; width:32%"/>
+                                        <input type="button" id="flowcontrol"
+                                               class="button color-lightblue button-fill usbcontrol"
+                                               name="clearData" value="Write Data in Buffer"
+                                               style="margin-top: 10px; width:32%;"/>
+                                        {{#if connectionToMasterServer}}
+                                        <input type="button" id="flowcontrol" class="button button-fill usbcontrol"
+                                               name="recordData" value="{{startStopLogging recordData}}"
+                                               style="margin-top: 10px; width:32%; background-color: {{loggingBtnColor recordData}};"/>
+                                        {{else}}
+                                            <div style="margin-top: 10px; width:32%; text-align: center">
+                                                <span style="font-size: 14px; font-family: Arial;">Error Pi is not Connected to Master Server</span>
+                                                <span style="font-size: 14px; font-family: Arial;">No datalogging available</span>
+                                            </div>
+
+                                        {{/if}}
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Current Data</div>
+                                                    <div class="item-input">
+                                                        <label name="currentData" placeholder="data:{key:value}" class="serialConfig">{{currentData}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row" style=" margin-left: 15px; margin-right: 15px; margin-top:-30px;">
+                                    {{#each commandButton}}
+                                        <div style="margin-top: -20px; width:33%">
+                                            <img src="../img/x-clear.png" class="xclear" id="{{btn}}"
+                                                 name="deleteThisButton"
+                                                 style="margin-bottom:-26px; margin-top:-28px; margin-left: -4px; z-index: 3000; position: relative"/>
+                                            <input type="button" id="customUSBCommand"
+                                                   class="button button-fill {{btnColor}} customUSBCommand"
+                                                   name="{{commandToSend}}" value="{{btnLabel}}"
+                                                   style="margin-top: 10px; z-index: 2"/>
+
+                                        </div>
+                                    {{/each}}
+                                </div>
+                                <div class="row" style=" margin-left: 15px; margin-right: 15px; margin-top:-10px; margin-bottom:15px">
+                                    {{#each commLogic}}
+                                        <div style="margin-top: -20px; width:33%">
+                                            <img src="../img/x-clear.png" class="xclear" id="{{numID}}"
+                                                 name="deleteThisComm"
+                                                 style="margin-bottom:-56px; margin-top:-28px; margin-left: -4px; z-index: 3000; position: relative"/>
+
+                                            <div style="padding-top: 2px; padding-bottom:2px; color:#6d6d72; font-size: 14px; font-family: Arial; margin: 35px 15px 10px;">any line with: "{{keyword}}" -> {{toPortName}}</div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                                <div class="list-block" style="padding-top:1px;  margin-top:0px;">
+                                    <div class="con"
+                                         style="padding-top: 2px; padding-bottom:2px; font-size: 14px; color:gray; padding-left:10px;">
+                                        Configuration Settings...
+                                        <img src="{{displayConfigsSettings}}" class="xclearBig" name="displayConfigsBox" style="margin-left:48px;"/>
+                                    </div>
+                                </div>
+                                {{#if displayConfigsBox}}
+                                    <div class="list-block" style="padding-top:1px  margin-top:-30px;">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Name</div>
+                                                        <div class="item-input">
+                                                            <input type="text" name="portName" class="serialConfig"
+                                                                   value="{{portName}}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Write to O:/ file every:</div>
+                                                        <div class="item-input" style="width: 80px;">
+                                                            <input type="number" class="serialConfig" name="writeInterval" value="{{writeInterval}}"/>
+                                                        </div>
+                                                        <div class="item-input">
+                                                            <label>seconds</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Datalogging File Path</div>
+                                                        <div class="item-input">
+                                                            <div name="choosePath" placeholder="Before Datalogging set this">{{oDriveAlias folderPath}}/</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Filename (*.csv)</div>
+                                                        <div class="item-input">
+                                                            <input type="text" name="filename" placeholder="Before Datalogging set this" class="serialConfig"
+                                                                   value="{{filename}}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Code Project <br/> <br/> Board
+                                                        </div>
+                                                        <div class="item-input">
+                                                            <div>
+                                                                <select class="select arduinoProject" id="{{numIDComm}}" name="arduinoProject" style="width: 50%">
+                                                                    <option value="hexFile">Precompiled Hex File..</option>
+                                                                    {{#each arduinoProjectsList arduinoProject}}
+                                                                        <option {{ifSelected}} value="{{name}}">{{name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                            <select class="select arduinoBoard" id="{{numIDComm}}" name="arduinoBoard">
+                                                                {{#each arduinoBoardsHelp arduinoBoard}}
+                                                                    <option {{ifSelected}} name="{{board}}">{{alias}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="item-after">
+
+                                                        <span class=" button button-fill color-gray" id="uploadCodeToArduino" style="padding-top: 2px; margin-top: -2px">
+                                                            {{uploadCodeDisplay}}
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-content" style="display:{{showChooseFile}};">
+                                                    <div class="item-inner" >
+                                                        <div class="item-title label">Precompiled Hex File</div>
+                                                        <div class="item-input">
+                                                            <label placeholder="myproject.hex" class="serialConfig">{{hexFileName}}</label>
+                                                            <span style="font-size: 10px; margin-top: -15px; color:darkgray;">{{prettifyDateTime hexFilelastModifiedDate}}</span>
+
+                                                        </div>
+                                                        <div class="item-after">
+                                                        <span class=" button button-fill color-gray" id="chooseHexFile" style="background-color: darkseagreen; padding-top: 2px; margin-top: -2px">
+                                                            Choose .hex File
+                                                        </span>
+                                                            <input id="uploadHexFile" type="file" style="display:none;"/>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{#if uploadingcode uploadCodeDisplay}}
+                                                <li style="height: auto; text-align: right; padding-right: 15px; background-color: {{uploadCodeColor}};">
+                                                    <label style="font-size: 12px">Upload Status....</label><br/>
+                                                    <ul style="background-color: {{uploadCodeColor}};">
+                                                        {{#each makeUploadNewLine makeUpload}}
+                                                            <li>
+                                                                <label style="font-size: 12px; height: auto; margin-top: -12px;">{{line}}</label>
+                                                            </li>
+                                                        {{/each}}
+                                                    </ul>
+
+
+                                                </li>
+                                            {{/if}}
+                                        </ul>
+                                    </div>
+                                {{/if}}
+
+                                <div class="list-block" style="padding-top:1px;  margin-top:-30px;">
+                                    <div class="con"
+                                         style="padding-top: 2px; padding-bottom:2px; font-size: 14px; color:gray; padding-left:10px;">
+                                        New Command Button...
+                                        <img src="{{displayAddCommand}}" class="xclearBig" name="displayAddCommand" style="margin-left:45px;"/>
+                                    </div>
+                                </div>
+                                {{#if displayAddCommandBox}}
+                                    <div class="list-block" style="padding-top:1px">
+                                        {{>newCommand}}
+                                    </div>
+                                {{/if}}
+                                {{#if moreThanOne}}
+                                <div class="list-block" style="padding-top:1px; margin-top:-30px;">
+                                    <div class="con"
+                                         style="padding-top: 2px; padding-bottom:2px; font-size: 14px; color:gray; padding-left:10px;">
+                                        Cross Communication Logic...
+                                        <img src="{{displayAddComm}}" class="xclearBig" name="displayAddComm"/>
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{#if displayAddCommBox}}
+                                    <div class="list-block" style="padding-top:1px">
+                                        {{>newComm}}
+                                    </div>
+                                {{/if}}
+                                <div class="list-block" style="padding-top:1px;">
+                                    <ul>
+                                    </ul>
+                                </div>
+
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
+                {{else}}
+                    <div style="margin-top:30px; margin-left: 20px; font-size: 14px; font-family: Arial;">
+                        Raspberry Pi is not connected..
+                    </div>
+                {{/if}}
+            </div>
+
+        {{/with}}
+    {{/if}}
+
+</template>
+
+<template name="newCommand">
+    <ul>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Command To Send</div>
+                    <div class="item-input">
+                        <input type="text" id="{{numID}}" name="commandToSend" placeholder="command" class="newCommand"
+                               value="{{commandToSend}}"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Button Label</div>
+                    <div class="item-input">
+                        <input type="text" id="{{numID}}" name="btnLabel" class="newCommand" placeholder="label" value="{{buttonLabel}}"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Button Color</div>
+                    <div class="item-input">
+                        <select class="select" id="{{numID}}" name="btnColor">
+                            {{#each btnColorOptions}}
+                                <option name="{{color}}">{{colorOption}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</template>
+
+<template name="newComm">
+    <ul>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Trigger Keyword</div>
+                    <div class="item-input">
+                        <input type="text" id="{{numIDComm}}" name="keyword" placeholder="keyword" class="newComm"
+                               value="{{keyword}}"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Send to USB:</div>
+                    <div class="item-input">
+                        <select class="select" id="{{numIDComm}}" placeholder="port name" name="toPort">
+                            {{#each usbportList notThisUSB}}
+                                {{#if isConnected}}
+                                    <option value="{{port}}">{{portName}}</option>
+                                {{/if}}
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</template>
+
+<template name="newMasterLogic">
+    <ul>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Trigger Keyword</div>
+                    <div class="item-input">
+                        <input type="text" id="{{numIDComm}}" name="keyword" placeholder="keyword" class="newComm"
+                               value="{{keyword}}"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Send to USB:</div>
+                    <div class="item-input">
+                        <select class="select" id="{{numIDComm}}" placeholder="port name" name="toPort">
+                            {{#each usbportList notThisUSB}}
+                                {{#if isConnected}}
+                                    <option value="{{port}}">{{portName}}</option>
+                                {{/if}}
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</template>

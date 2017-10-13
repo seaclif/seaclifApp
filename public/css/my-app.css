@@ -1,0 +1,64 @@
+input {
+    /*-webkit-appearance:none;*/
+    -webkit-border-radius: 0px;
+    width: 110px;
+}
+
+.table {
+    border-style: solid;
+}
+
+
+.i2Style{
+    font:normal 30px HelveticaNeue, tahoma;
+    font-style:normal;
+    color:#ffffff;
+    border:0px solid #bbb;
+    text-shadow:0px 1px 0px #fff;
+    box-shadow:5px 2px 10px #d1cfd1;
+    -moz-box-shadow:5px 2px 10px #d1cfd1;
+    -webkit-box-shadow:5px 2px 10px #d1cfd1;
+    border-radius:10px 10px 10px 10px;
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px 10px 10px 10px;
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.6) 100%);
+    cursor:pointer;
+    margin:5px;
+}
+
+.i2Style:active{
+    cursor:pointer;
+    position:relative;
+    top:5px;
+}
+
+.keypad {
+    padding:0px;
+    margin:1px;
+    font-size:37pt;
+    border-style:none;
+    color:White;
+    Height:17vh;
+    max-width: 150px;
+    Width:25%;
+
+}
+
+body { font: 12px Arial;}
+
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+
+

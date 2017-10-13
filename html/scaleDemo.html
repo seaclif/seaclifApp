@@ -1,0 +1,221 @@
+<template name="scaleDemoPage" xmlns="http://www.w3.org/1999/html">
+    <div data-page="form" class="page" style="height:100%;">
+        {{#if createdReady}}
+            {{>scaleDemo}}
+        {{else}}
+            Loading...
+        {{/if}}
+    </div>
+</template>
+
+<template name="scaleDemo">
+
+    {{#if connectionReady}}
+        {{#with usbport}}
+            {{> connectionStatus}}
+            <div class="page-content" style="padding-bottom: 100px;">
+                {{#if usbReady}}
+                <div style="width: auto; text-align: center; margin-top: 15px; font-size: 14px; text-transform: uppercase; color: #6d6d72;">{{thisLocation}}</div>
+
+                    {{#with configuredUSBport}}
+                        {{#if isConnected}}
+
+                            <!--<div class="list-block">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Current Data</div>
+                                                <div class="item-input">
+                                                    <label name="currentData" placeholder="data:{key:value}" class="serialConfig">{{currentData}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>-->
+
+                            <div class="list-block" style="margin-top:-20px;">
+                                <div class="row" style="margin-bottom:10px">
+                                    <input type="button" id="weight" class="button button-fill"
+                                           value="Weight"
+                                           style="height:20vh; font-size:70px; background-color: #0099cc; margin-left: 5%; margin-top: 10px; width:90%;"/>
+                                </div>
+
+                                {{#if weightMode}}
+                                    <ul style="margin-left:5%; margin-right: 5%; margin-top: -5px;">
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Weight [lbs]:</div>
+                                                    <div class="item-input">
+                                                        {{#if loading}}
+                                                            <label name="currentData" placeholder="" class="serialConfig">Loading...</label>
+                                                        {{else}}
+                                                            <label name="currentData" placeholder="" class="serialConfig">{{currentData}}</label>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                {{/if}}
+
+
+                                <div class="row" style="margin-bottom:10px">
+                                    <input type="button" id="bodyFat" class="button button-fill"
+                                           value="Body Fat" style="height:20vh; font-size:70px; background-color: #99cc33; margin-left: 5%; margin-top: 10px; width:90%;"/>
+                                </div>
+                                {{#if bodyFatMode}}
+
+                                        <ul style="margin-left:5%; margin-right: 5%; margin-top: -15px;">
+                                            {{#with currentUserInfo}}
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Height:</div>
+                                                        <div class="item-input" style="width: 80px;">
+                                                            <select class="select" name="heightFeet">
+                                                                <option >..</option>
+                                                                {{#each availableFeet heightFeet}}
+                                                                    <option {{ifSelected}}>{{heightFeet}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="item-input" style="width:80px;">
+                                                            <label>feet</label>
+                                                        </div>
+                                                        <div class="item-input"  style="width: 80px;">
+                                                            <select class="select" name="heightInches">
+                                                                <option >..</option>
+                                                                {{#each availableInches heightInches}}
+                                                                    <option {{ifSelected}}>{{heightInches}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </div>
+                                                        <div class="item-input">
+                                                            <label>inches</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Weight</div>
+                                                        <div class="item-input">
+                                                            <input type="text" name="weight" class="scaleDemo"
+                                                                   value="{{weight}}" placeholder="100"/>
+                                                        </div>
+                                                        <div class="item-input">
+                                                            <label>lbs</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Birth date</div>
+                                                        <div class="item-input">
+                                                            {{#if hasBirthday}}
+                                                                <input type="date" placeholder="Birth day" name="birthday" class="select" value="{{birthday}}"/>
+                                                            {{else}}
+                                                                <input type="date" placeholder="Birth day" name="birthday" class="select" value="2014-04-30"/>
+                                                            {{/if}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">Gender</div>
+                                                        <div class="item-input">
+                                                            <select class="select" name="gender">
+                                                                {{#if gender}}
+                                                                    <option>{{gender}}</option>
+                                                                {{else}}
+                                                                    <option>..</option>
+                                                                    <option>Male</option>
+                                                                    <option>Female</option>
+                                                                {{/if}}
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/with}}
+                                            {{#if infoFilled}}
+                                                <li>
+                                                    <div class="item-content">
+                                                        <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Body Fat:</div>
+                                                            <div class="item-input">
+                                                                {{#if loading}}
+                                                                    <label name="currentData" placeholder="" class="serialConfig">Loading...</label>
+                                                                {{else}}
+                                                                    <label name="currentData" placeholder="" class="serialConfig">{{currentData}}</label>
+                                                                {{/if}}
+                                                            </div>
+                                                            <div class="item-input" style="width:100%;">
+                                                                <label>%</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {{/if}}
+                                        </ul>
+
+                                {{/if}}
+
+                                <div class="row" style="margin-bottom:10px">
+                                    <input type="button" id="dataCollection" class="button button-fill"
+                                           value="Data Collection"
+                                           style="height:10vh; font-size:20px; border: 1px solid #e5e5e5; background-color: rgba(130,130,130, 0.7); margin-left: 5%; margin-top: 10px; width:90%;"/>
+                                </div>
+
+                                {{#if dataCollectionMode}}
+                                    <ul style="margin-left:5%; margin-right: 5%; margin-top: -5px;">
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Data:</div>
+                                                    <div class="item-input">
+                                                        {{#if loading}}
+                                                            <label name="currentData" placeholder="" class="serialConfig">Loading...</label>
+                                                        {{else}}
+                                                            <label name="currentData" placeholder="" class="serialConfig">{{currentData}}</label>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div style="width:100%; text-align: center;">
+                                        <label style="font-size: 40px; width: 100%; text-align: center;">{{timeOutDataCollection}}</label>
+                                    </div>
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                    {{/with}}
+                {{else}}
+                    <div style="margin-top:30px; margin-left: 20px; font-size: 14px; font-family: Arial;">
+                        Not connected..
+                    </div>
+                {{/if}}
+            </div>
+
+        {{/with}}
+    {{/if}}
+
+</template>

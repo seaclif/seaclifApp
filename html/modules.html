@@ -1,0 +1,150 @@
+<template name="modulesWithTabs">
+    <div data-page="form" class="page" style="height:100%;">
+        {{#if createdReady}}
+            {{>modules}}
+            {{>tabComputers}}
+        {{else}}
+            Loading...
+        {{/if}}
+    </div>
+</template>
+
+<template name="modules">
+    {{#if connectionReady}}
+        {{#with modulePi}}
+            {{> connectionStatus}}
+            {{#if moduleControlReady}}
+            <div class="page-content" style="padding-bottom: 400px;">
+                <div class="content-block-title">Error Log</div>
+                {{#if moduleErrorsReady}}
+                    <div style="margin-left: 20px;">
+                        {{#each moduleErrors}}
+                            <p>{{prettifyDateTime timeStamp}}: {{errorMessage}}</p>
+                        {{/each}}
+                    </div>
+                {{/if}}
+
+                {{#each uniqueModule}}
+
+                    <div class="content-block-title editModule" name="{{id}}" >{{id}}</div>
+                    {{#if editing id}}
+                        <div class="content-block-title" style="margin-top: 0px;">
+                            <input type="number" id="aModuleNumber" name="{{id}}" value="{{aModuleNumber id}}"
+                                                                                          style="width:30px; margin-left:10px; font-size: 14px; font-family:Arial; border:none; background-color: #efeff4"/>
+
+                            <label>count:[{{countOfModules id}}]</label>
+                        </div>
+                        {{#with aModuleEntry id}}
+                            <textarea rows="4" cols="20" class='modifyEntry' id="{{_id}}"
+                                      style="margin-left:15px; border:none; font-size: 14px; font-family:Arial; background-color: #efeff4; border-style: none; box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 4px 6px 0 rgba(0, 0, 0, 0.1);">{{meToJson}}</textarea>
+                        {{/with}}
+                        <div class="list-block">
+                            <ul>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Datalogging File Path</div>
+                                            <div class="item-input">
+                                                <div name="choosePath"
+                                                     placeholder="Before Datalogging set this">{{oDriveAlias folderPath}}
+                                                    /
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Filename (*.csv)</div>
+                                            <div class="item-input">
+                                                <input type="text" name="filename"
+                                                       placeholder="Before Datalogging set this" class="serialConfig"
+                                                       value="{{filename}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    {{/if}}
+
+
+                    <div class="list-block">
+                        <ul>
+                            {{#each uniqueRow}}
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            {{#each rowModule id row}}
+                                                {{#if mStatic}}
+                                                    {{>mStatic}}
+                                                {{/if}}
+                                                {{#if mButton}}
+                                                    {{>mButton}}
+                                                {{/if}}
+                                                {{#if mSend}}
+                                                    {{>mSend}}
+                                                {{/if}}
+                                                {{#if mSelect}}
+                                                    {{>mSelect}}
+                                                {{/if}}
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/each}}
+
+                <div class="content-block-title">New Module: <input type="text" class="newModule" value=""
+                                                                    style="border:none"
+                                                                    placeholder="exhaust2"></div>
+                </div>
+            {{/if}}
+        {{/with}}
+        {{else}}
+            No Pi connected...
+    {{/if}}
+
+</template>
+
+<template name="mStatic">
+    <div class="item-title label" style="min-width:150px; min-width:150px ;margin-right: 10px; {{labelStyle}}">{{mStatic}}</div>
+    <div class="item-input" style="width: auto;">
+        <label class="mLabel" style="width: auto; margin-right: 10px; {{inputStyle}}"
+               name="{{mStatic}}">{{value}}</label>
+    </div>
+</template>
+
+<template name="mButton">
+    <div class="item-title label" style="min-width:150px; margin-right: 10px; {{labelStyle}}">{{mButton}}</div>
+    <div class="item-input" style="width: auto;">
+        <input type="button" class="button-fill button color-green mButton"
+               style="width: auto; margin-right: 10px; padding-left: 10px; padding-right:10px; {{inputStyle}}"
+               name="{{mButton}}" value="{{value}}">
+    </div>
+</template>
+
+<template name="mSend">
+    <div class="item-title label" style="min-width:150px; margin-right: 10px; {{labelStyle}}">{{mSend}}</div>
+    <div class="item-input" style="width: auto;">
+        <input id="templateNameDeclare" type="text" class="mSend"
+               style="width: auto; margin-right: 10px; {{inputStyle}}"
+               name="{{mSend}}" placeholder="{{placeholder}}" value="{{value}}">
+    </div>
+    <label class="unitLabel" style="width: auto; margin-right: 10px; {{unitsStyle}}" name="{{units}}">{{units}}</label>
+
+</template>
+
+<template name="mSelect">
+    <div class="item-title label" style="min-width:150px; margin-right: 10px; {{labelStyle}}">{{mSelect}}</div>
+    <div class="item-input" style="width: auto;">
+        <select class="mSelect" name="{{mSelect}}" style="width: auto; margin-right: 10px; {{inputStyle}}">
+            {{#each selectHelper options value}}
+                <option {{isSelected}}>{{option}}</option>
+            {{/each}}
+        </select>
+    </div>
+</template>

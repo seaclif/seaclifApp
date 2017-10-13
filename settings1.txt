@@ -1,0 +1,11 @@
+/*
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "ROOT_URL": "http://modules.sugadata.com",
+      "MONGO_URL": "mongodb://lumetApp:Novatek4lumet@ds025969-a0.mlab.com:25969/modules",
+      "MONGO_OPLOG_URL": "mongodb://oplog-reader:Novatek4lumet@ds025969-a0.mlab.com:25969/local?authSource=admin"
+    }
+  }
+}
+*/

@@ -1,0 +1,245 @@
+<template name="spectrometerWithTabs">
+    <div data-page="form" class="page" style="height:100%;">
+        {{#if createdReady}}
+            {{>spectrometer}}
+            {{>tabComputers}}
+        {{/if}}
+    </div>
+</template>
+
+<template name="spectrometer">
+    {{#if connectionReady}}
+        {{#with spectroCompDB}}
+            {{> connectionStatus}}
+        {{/with}}
+        {{#with spectrometer}}
+            <div style="height: 5px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; align-items: center; text-align: center; background-image: {{connectionStatus}}">
+                <div style="width: 100%; text-align: center; margin-top: 10px;"><div style="height:3px;"></div><span style="border-radius: 27px; width:auto; padding-top:2px; padding-bottom:2px; padding-left:15px; padding-right:15px; border: 1px solid #e5e5e5; background-color: rgba(230,230,230, 0.7); font-size: 14px; font-family: Arial; color: #007aff;">{{spectrometerDeviceStatus}}</span></div>
+            </div>
+
+            <div class="page-content">
+                <div class="content-block">
+                    <div class="row">
+                        <div class="col-60">
+                            <input type="button" id="btnBackground" name="{{id}}"
+                                   class="button button-big button-fill color-blue btnBackground notSelectable"
+                                   value="{{backgroundNumber}}" style="margin-top: 10px"/>
+                            <input type="button" id="btnScan" value="Scan"
+                                   class="button button-big button-fill color-green btnScan"
+                                   style="margin-top: 10px"/>
+                        </div>
+                        {{#with spectroCompDB}}
+                            <div class="col-40" style="text-align: center; margin-top: 10px;">
+                                <img id="controlBarcode"
+                                     style="height:60px; padding-left: 10px; padding-right: 10px; background-color: white;"
+                                     name="{{barcodeUserHere}}" class="controlBarcode {{populateBarcodeObj}}">
+
+                                <div class="item-title label">Print Every Time:</div>
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <label class="label-switch">
+                                            <input id="controlBarcodeEvery" type="checkbox" name="{{_id}}"/>
+
+                                            <div id="controlBarcodeEveryDiv" class="checkbox "></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/with}}
+                    </div>
+                </div>
+                <div class="list-block">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Analyte:</div>
+                                    <div class="item-input">
+                                        <select class="spectrometer" name="analyte">
+                                            {{#each availableAnalytes analyte}}
+                                                <option {{ifSelected}}>{{analyte}}</option>
+                                            {{/each}}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Analyte Amount:</div>
+                                    <div class="item-input" style="width: 150px; margin-right: 20px;">
+                                        <input type="number" class="spectrometer" name="analyteAmount"
+                                               placeholder={{analyteAmount}} value={{analyteAmount}}/>
+                                    </div>
+                                    <div class="item-input">
+                                        [mg/dL]
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Resolution:</div>
+                                    <div class="item-input">
+                                        <select name="resolution" class="spectrometer">
+                                            {{#each availableResolutions resolution}}
+                                                <option {{ifSelected}}>{{resolution}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Scan Duration:</div>
+                                    <div class="item-input" style="width: 80px;">
+                                        <select class="spectrometer" name="scanDuration">
+                                            {{#each availableScanDurations scanDuration}}
+                                                <option {{ifSelected}}>{{scanDuration}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="item-input">
+                                        <select class="spectrometer" name="scanDurationUnits">
+                                            {{#each availableScanDurationUnits scanDurationUnits}}
+                                                <option {{ifSelected}}>{{scanDurationUnits}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Mode Option:</div>
+                                    <div class="item-input">
+                                        <select class="spectrometer" name="modeOption">
+                                            {{#each availableModeOptions modeOption}}
+                                                <option {{ifSelected}}>{{modeOption}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                {{>scans}}
+            </div>
+
+            <script>
+
+
+                var changedNum = false;
+
+                $('#btnBackground').mousedown(function () {
+                    console.log('mousedown')
+                    clearTimeout(this.downTimer);
+                    changedNum = false;
+                    this.downTimer = setTimeout(function () {
+                        changeBackgroundNum($('#btnBackground').attr('name'), $('#btnBackground').val());
+                        changedNum = true;
+                    }, 1000);
+                }).mouseup(function (e) {
+                    clearTimeout(this.downTimer);
+                    if (!changedNum) {
+                        scanBackground($('#btnBackground').prop('name'), $('#btnBackground').val());
+                    }
+                });
+
+                $('#btnBackground').on('touchstart', function () {
+                    clearTimeout(this.downTimer);
+                    changedNum = false;
+                    this.downTimer = setTimeout(function () {
+                        changeBackgroundNum($('#btnBackground').prop('name'), $('#btnBackground').val());
+                    }, 1000);
+                    changedNum = true;
+                }).on('touchend', function (e) {
+                    clearTimeout(this.downTimer);
+                    if (!changedNum) {
+                        scanBackground($('#btnBackground').prop('name'), $('#btnBackground').val());
+                    }
+
+                });
+
+                $(document).ready(function () {
+
+                    $('.notSelectable').disableSelection();
+
+                });
+
+
+                // This jQuery Plugin will disable text selection for Android and iOS devices.
+                // Stackoverflow Answer: http://stackoverflow.com/a/2723677/1195891
+                $.fn.extend({
+                    disableSelection: function () {
+                        this.each(function () {
+                            this.onselectstart = function () {
+                                return false;
+                            };
+                            this.unselectable = "on";
+                            $(this).css('-moz-user-select', 'none');
+                            $(this).css('-webkit-user-select', 'none');
+                        });
+                    }
+                });
+
+            </script>
+        {{/with}}
+
+    {{/if}}
+
+</template>
+
+<template name="scans">
+    <div class="content-block-title" name="choosePath">{{folderPath}}/{{sessionFolder}}</div>
+
+    <div class="list-block">
+        <ul>
+            {{#each scan}}
+                <li class="swipeout">
+                    <div class="item-link">
+                        <div class="item-content">
+                            <div class="item-inner" id="{{_id}}">
+                                <div class="item-title scan">
+                                    {{backgroundNumber}} {{barcode}} {{prettifyDate createdAt}}
+                                    <label style="text-align: left; font-size: small; color: blue;">{{scanDuration}} {{scanDurationUnits}}</label>
+                                    <label style="text-align: right; font-size: medium; color: gray;">{{dataComplete}}</label>
+
+                                </div>
+                                <a href="/queue/{{_id}}">
+                                    <div class="item-after"
+                                         style="width: 100%; padding-left: 10px; padding-right: 10px;"><span
+                                            class="badgeNormal bg-green">{{scanNum}}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swipeout-actions-right delete" name="delete" id="{{_id}}">
+                            <a href="#" class="action2 bg-red delete" name="delete" id="{{_id}}">Delete</a>
+                        </div>
+                        <div class="swipeout-actions-left">
+                            <a href="#" class="action1" id="{{_id}}">Scan</a>
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+        <div style="margin-bottom:200px">
+
+        </div>
+    </div>
+
+</template>
+
+<template name="spectrometerDevice">
+    <div style="height: 5px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; align-items: center; text-align: center; background-image: {{connectionStatus}}">
+
+    </div>
+</template>

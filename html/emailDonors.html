@@ -1,0 +1,111 @@
+<template name="emailDonors">
+
+    {{#if savedTemplatesReady}}
+    <div style=" width: 100%; margin-top: 9px; position:absolute; z-index: 15;">
+        <div class="list-block" style="box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+            {{#if hasTemplates}}
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Name Template:</div>
+                            <div class="item-input">
+                                <input id="templateNameDeclare" type="text" class="queryTemplates"
+                                       name="templateName" placeholder="Template Name"
+                                       value="{{selectedTemplateName}}">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Saved Email Templates</div>
+                            <div class="item-input">
+                                <select class="selectTemplate" name="savedTemplates" id="selectTemplate">
+                                    <option {{selectedTemplate}}>[New Template..]</option>
+                                    {{#each savedTemplates}}
+                                        <option {{selectedTemplate _id}}>{{name}}</option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Donated Since</div>
+                            <div class="item-input">
+                                <input type="date" placeholder="Date" name="dateSince" class="select" value="{{dateSince}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--<li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Email Subject:</div>
+                            <div class="item-input">
+                                <input id="templateNameDeclare" type="text" class="queryTemplates"
+                                       name="templateName" placeholder="Template Name"
+                                       value="{{emailSubject}}">
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Email Body:</div>
+                            <div class="item-input">
+                                <textarea id="templateNameDeclare" type="text" class="queryTemplates"
+                                          name="templateName" placeholder="Template Name"
+                                          style="border:solid 1px darkgray">{{emailBody}}</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>-->
+            </ul>
+            {{/if}}
+        </div>
+    </div>
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 150px">
+            <div class="content-block-title">Email Addresses</div>
+            {{#if emailAddressesReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each emailAddress}}
+                            <li class="swipeout">
+                                <div class="swipeout-content item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <label name="anEmail" style="text-align: left;">{{email}}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <!-- Add this button and item will be deleted automatically -->
+                                    <a href="#" class="swipeout-delete" name="delete" id="{{_id}}">Delete</a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        <li class="swipeout">
+
+                        </li>
+                    </ul>
+                </div>
+                <div>{{listOfAddresses}}</div>
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+    {{/if}}
+</template>

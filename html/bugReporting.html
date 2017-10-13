@@ -1,0 +1,94 @@
+<template name="bugReporting">
+    <div style=" width: 100%; margin-top: 9px; position:absolute; z-index: 15;">
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:195px;">Request Owner:</div>
+                            <div class="item-input">
+                                <input type="text" id="owner" placeholder="Your Name"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#if hasOwner}}
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><img src="/img/newFeature.png" style="height: 29px; margin-left: -5px; width:auto;"></div>
+                            <div class="item-inner">
+                                <div class="item-title label" style="text-align: left; width:195px;">{{joething}}</div>
+                                <div class="item-input">
+                                    <input type="text" name="newFeature" id="newFeature" placeholder="Description"
+                                           style="text-align: left;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><img src="/img/bug.png" style="height: 29px; margin-left: -5px; width:auto;"></div>
+                            <div class="item-inner">
+                                <div class="item-title label" style="text-align: left; width:115px;">Report Bug:</div>
+                                <div class="item-input">
+                                    <input type="text" name="newBug" id="newBug" placeholder="Description"
+                                           style="text-align: left;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/if}}
+
+            </ul>
+        </div>
+    </div>
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 110px">
+            <div class="content-block-title">Bug and Feature Requests</div>
+            {{#if bugsfeaturesReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each bugsfeatures}}
+                            <li class="swipeout">
+                                <div class="swipeout-content item-content">
+                                    <div class="item-media"><img src="{{bugOrFeatureIcon}}"
+                                                                 style="height: 25px; width:auto;">
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="tel" name="aFeature" style="text-align: left;"
+                                                   value="{{description}}"/>
+                                        </div>
+                                        <div class="item-after"
+                                             style=" padding-left: 10px; padding-right: 10px;"><span
+                                                class="badgeNormal bg-blue">{{owner}}</span>
+                                        </div>
+                                        <div class="item-after"
+                                             style=" padding-left: 10px; padding-right: 10px;"><span
+                                                class="badgeNormal bg-green">{{prettifyDateTime dateTime}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <!-- Add this button and item will be deleted automatically -->
+                                    <a href="#" class="swipeout-delete" name="delete" id="{{_id}}">Delete</a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        <li class="swipeout">
+
+                        </li>
+                    </ul>
+                </div>
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+</template>
+<template name="another">
+
+</template>

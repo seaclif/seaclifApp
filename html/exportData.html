@@ -1,0 +1,341 @@
+<template name="exportdata">
+    {{#if savedTemplatesReady}}
+        <div style="width: 100%; margin-top: 9px; position:absolute; z-index: 15; ">
+            <div class="list-block" style="box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+                {{#if hasTemplates}}
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Name Template:</div>
+                                <div class="item-input">
+                                    <input id="templateNameDeclare" type="text" class="queryTemplates"
+                                           name="templateName" placeholder="Template Name"
+                                           value="{{selectedTemplateName}}">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Saved Templates</div>
+                                <div class="item-input">
+                                    <select class="selectTemplate" name="savedTemplates" id="selectTemplate">
+                                        <option {{selectedTemplate}}>[New Template..]</option>
+                                        {{#each savedTemplates}}
+                                            <option {{selectedTemplate _id}}>{{name}}</option>
+                                        {{/each}}
+
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                {{/if}}
+            </div>
+            {{#if savedTemplatesReady}}
+                {{#with thisTemplate}}
+                    <div style="margin-top: -20px">
+                        <div>
+                            <label style="font: 12px Arial; color: #6d6d72; float:left; margin-left:5px;">{{dateOneHelper}}</label>
+                            <label style="font: 12px Arial; color: #6d6d72; float:right; margin-right:5px;">{{dateTwoHelper}}</label>
+                        </div>
+                        <section class="range-sliderDual" style="margin-top: 0px">
+                            <span class="rangeValues"></span>
+                            <label style="font: 12px Arial; font-size: 14px; text-transform: uppercase; line-height: 1; color: #6d6d72;">
+                                Date Span
+                            </label>
+                            <input value="{{dateOneRange}}" min="0" max="{{dateRangeSpan}}" step="1" type="range" id="dateOne">
+                            <input value="{{dateTwoRange}}" min="0" max="{{dateRangeSpan}}" step="1" type="range" id="dateTwo">
+                        </section>
+                        <div>
+                            <label style="font: 12px Arial; color: #6d6d72; float:left; margin-left:5px;">{{hourOneHelper}}</label>
+                            <label style="font: 12px Arial; color: #6d6d72; float:right; margin-right:5px;">{{hourTwoHelper}}</label>
+                        </div>
+                        <section class="range-sliderDual" style="margin-top: 0px">
+                            <span class="rangeValues"></span>
+                            <label style="font: 12px Arial; font-size: 14px; text-transform: uppercase; line-height: 1; color: #6d6d72;">
+                                Hour Span
+                            </label>
+                            <input value="{{hourOneRange}}" min="0" max="1440" step="1" type="range" id="hourOne">
+                            <input value="{{hourTwoRange}}" min="0" max="1440" step="1" type="range" id="hourTwo">
+                        </section>
+                    </div>
+                {{/with}}
+
+            <div style="overflow: auto; overflow-y: hidden;">
+
+
+                    <table style="width:100%;">
+                        <div class="content-block-title" style="padding:0px; margin-bottom:0px; margin-top: 5px;">
+                            Databases
+                        </div>
+
+                        <tr>
+                            {{#each databasesSelectedHelper}}
+                                <td>
+                                    {{> tdDBBlock}}
+                                </td>
+                            {{/each}}
+                        </tr>
+
+                        {{#each andQueries}}
+                            <tr>
+                                {{#each queries}}
+                                    {{> tdBlock}}
+                                {{/each}}
+                            </tr>
+                        {{/each}}
+                    </table>
+
+                    <table>
+                        <tr>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+            {{else}}
+                Loading ...
+
+            {{/if}}
+        </div>
+
+    {{/if}}
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 250px">
+            <div id="getResult" class="content-block-title" style="padding:0px; margin-bottom:10px; margin-top: 5px;">Data:</div>
+            <table>
+                {{#each resultOfQueries}}
+                <tr>
+                    <td style="text-align: left;">{{prettifyDateTimeMilli time}}</td>
+                    {{#each this.columns}}
+                        <td style="text-align: center;">{{this.data}}</td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </table>
+
+        </div>
+    </div>
+
+</template>
+<template name="tdDBBlock">
+    {{#if type}}
+        <div class="list-block" style="padding:0px; margin:0px;">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <select class="selectDB" name="{{type}}" id="{{tID}}"
+                                        style="border-style: solid; border-width: 1px; border-color:#D6D5D5; border-left: none; border-top:none;">
+                                    <option>..</option>
+                                    {{#each availableOptions}}
+                                        <option {{selected}}>{{option}}</option>
+                                    {{/each}}
+                                </select>
+
+                            </div>
+
+                            <div class="item-after" style=" padding-left: 5px; text-align: right;">
+                                <span id="removeDB"
+                                      style="color: gray; margin-top:-5px; width: 10px; font-size:30px; border: none; padding-left:4px; background-color:white;">-</span>
+                                <span id="anotherDB"
+                                      style="color: gray; margin-top:-4px; width: 10px; font-size:30px; border: none; padding-left: 5px; background-color:white;">+</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {{/if}}
+</template>
+<template name="tdBlock">
+    <td>
+        <div class="list-block" style="padding:0px; margin:0px; ">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label andOrType"
+                                 style="display:inline-block; width: auto;">{{type}}</div>
+                            <div class="item-input">
+                                <select class="selectAndOr" id="{{tID}}"
+                                        style="display:inline-block; width: auto; margin-top:3px;">
+                                    <option>..</option>
+                                    {{#each fields}}
+                                        <option {{selected}}>{{option}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            {{#if field}}
+                                <div class="item-after">
+                                    <span style="margin-top: 3px; margin-left: -3px; padding-right: 4px;">:</span>
+                                    <select {{multi}} class="selectValue" name="{{type}}" id="{{tID}}"
+                                                      style="margin-top: -8px; display:inline-block; width: auto;">
+                                        {{#if multi}}
+                                        {{else}}
+                                            <option>..</option>
+                                        {{/if}}
+                                        {{#each values}}
+                                            <option {{selected}}>{{option}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            {{/if}}
+
+                            <div class="item-after" style=" padding-left: 5px; text-align: right;">
+
+                                <span id="remove"
+                                      style="color: gray; margin-top:-5px; width: 10px; font-size:30px; border: none; padding-left:4px; background-color:white;">-</span>
+                                <span id="another"
+                                      style="color: gray; margin-top:-4px; width: 10px; font-size:30px; border: none; padding-left: 5px; {{displayPlus}} background-color:white;">+</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </td>
+</template>
+
+<template name="searchOption">
+
+    <div class="list-block">
+        <ul>
+            <li>
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">{{type}}</div>
+                        <div class="item-input">
+                            <select class="select" name="database"
+                                    style="border-style: solid; border-width: 1px; border-color:#D6D5D5; border-left: none; border-top:none;">
+                                <option>..</option>
+                                {{#each availableOptions}}
+                                    <option {{selected}}>{{alias}}</option>
+                                {{/each}}
+                            </select>
+
+                        </div>
+
+                        <div class="item-after" style=" padding-left: 5px; text-align: right;">
+                            {{#if selected}}
+                                <span id="removeDB" name="{{num}}"
+                                      style="color: gray; margin-top:-5px; width: 10px; font-size:30px; border: none; padding-left:4px; background-color:white;">-</span>
+                            {{/if}}
+                            {{#if showPlus}}
+                                <span id="anotherDB" name="{{num}}"
+                                      style="color: gray; margin-top:-4px; width: 10px; font-size:30px; border: none; padding-left: 5px; background-color:white;">+</span>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<!--<li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">Key:</div>
+                                    <div class="item-input">
+                                        <select class="select" name="keys">
+                                            {{#each keys}}
+                                                <option {{configureAsHelper configureAsOption imConfiguredAs}}>{{configureAsOption}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">Field:</div>
+                                    <div class="item-input">
+                                        <select class="select" name="keys">
+                                            {{#each keys}}
+                                                <option {{configureAsHelper configureAsOption imConfiguredAs}}>{{configureAsOption}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>-->
+
+<template name="exportData2">
+    <div class="content-block-title">Export Data</div>
+    <div class="list-block">
+        <ul>
+            <li>
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">From Database</div>
+                        <div class="item-input">
+                            <select class="select" name="exportToDatabase">
+                                <option>..</option>
+                                {{#each databaseOptions}}
+                                    <option {{selected}}>{{alias}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="item-after"
+                             style=" padding-left: 10px; padding-right: 10px;"><span
+                                class="badgeNormal bg-green">{{dbCount}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            {{#each queryAble}}
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">{{field}}</div>
+                            <div class="item-input">
+                                <select class="select" name="healthConditions">
+                                    {{#each unique}}
+                                        <option>{{value}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+            <li>
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Date Range Start</div>
+                        <div class="item-input">
+                            <input type="date" placeholder="Birth day" name="birthday" class="select" min="2014-04-30"
+                                   max="2014-05-30" value="2014-04-30"/>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title label">Date Range End</div>
+                        <div class="item-input">
+                            <input type="date" placeholder="Birth day" name="birthday" class="select"
+                                   value="2014-04-30"/>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</template>
+

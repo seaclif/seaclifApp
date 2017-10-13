@@ -1,0 +1,153 @@
+<template name="tabComputersFlowvolume">
+    {{#each controlComputer}}
+        <a href='/flowvolume/{{id}}' id="{{id}}" class="tab-link active {{selectedClass}}">
+            <i class="icon tabIcon"></i>
+            <span class="tabbar-label">{{hostname}}</span>
+        </a>
+    {{/each}}
+</template>
+
+<template name="flowvolume_">
+    <div style="height: 5px; width: 100%; margin-top: 43px; position:absolute; z-index: 15; align-items: center; text-align: center; background-image: {{statusColor connectionStatus}}">
+    </div>
+
+    <div class="toolbar tabbar tabbar-labels">
+
+        <div class="toolbar-inner">
+            <div class="left" style="padding-left: 20px; padding-bottom: 12px; padding-right: 20px;">
+                <a href='/configureInterface/{{interfaceConfigureAs}}' id="{{controlDB}}" class="tab-link active">
+                    <i class="icon tabIconAdd"></i>
+                </a>
+            </div>
+
+            {{>tabComputersFlowvolume}}
+
+            <div style="padding-right: 55px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="row">
+
+            <div class="col-80">
+
+            </div>
+        </div>
+        <div class="row">
+            <input type="button" id="btnConnect" class="button button-big button-fill color-gray" value="Connect"
+                   style="margin-top: 10px; width:32%"/>
+            <input type="button" id="btnRecord" class="button button-big button-fill color-lightblue" value="{{recordBtn}}"
+                   style="margin-top: 10px; width:32%"/>
+            <input type="button" id="btnDisconnect" class="button button-big button-fill color-black" value="Disconnect"
+                   style="margin-top: 10px; width:32%"/>
+        </div>
+        <div class="row">
+            <input type="button" id="flowcontrol" class="button button-big button-fill color-red flowcontrol" name ="T" value="Power Off"
+                   style="margin-top: 10px; width:32%"/>
+            <input type="button" id="flowcontrol" class="button button-big button-fill color-red flowcontrol" name ="R" value="reset"
+                   style="margin-top: 10px; width:32%"/>
+            <input type="button" id="flowcontrol" class="button button-big button-fill color-green flowcontrol" name ="Y" value="Power On"
+                   style="margin-top: 10px; width:32%"/>
+        </div>
+        <div class="row">
+            <div class="col-100">
+                <div class="content-block-title">Calibration</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-50">
+                <input type="button" id="flowcontrol" name ="S" class="button button-big button-fill color-blue flowcontrol"
+                       value="Set High Point" style="margin-top: 10px; margin-left:50%"/>
+                <input type="button" id="flowcontrol" name ="A" class="button button-big button-fill color-orange flowcontrol"
+                       value="Set Low Point" style="margin-top: 10px; margin-left:50%"/>
+            </div>
+        </div>
+
+
+        <div class="content-block-title">Flow Volume</div>
+
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Current Value</div>
+                            <div class="item-input">
+                                <p>
+                                    {{currentValue}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Filename (*.csv)</div>
+                            <div class="item-input">
+                                <input type="text" name ="filename" class="flowvolume" value="{{filename}}"/>
+                            </div>
+                            <div class="item-after" style="text-align: right; width: 40px;">
+                                <input type="button" class="btnSaveFile" style="color: gray; margin-top:-5px; color: #69db65; font-size:17px; border: none; background-color:white;" value="Save"/>
+                            </div>
+                            <div class="item-after" style="text-align: right; width: 50px; padding-right: 5px;">
+                                <input type="button" class="btnNewFile" style="color: gray; margin-top:-5px; font-size:17px; border: none; background-color:white;" value="New"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Save Path</div>
+                            <div class="item-input">
+                                <div name ="choosePath">{{folderPath}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+
+        {{> lineChart}}
+
+
+
+    </div>
+    <script>
+        $("#logArea").change(function() {
+            $('#logArea').scrollTop($('#logArea')[0].scrollHeight);
+        });
+    </script>
+
+
+
+</template>
+
+<template name="flowvolume">
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content">
+            {{> lineChart}}
+        </div>
+    </div>
+</template>
+
+<template name="lineChart">
+    <h4>Data</h4>
+    <svg id="lineChart">
+    </svg>
+</template>
+
+
+
+
+
+
+
+
+
+

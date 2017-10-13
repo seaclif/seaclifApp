@@ -1,0 +1,98 @@
+<template name="charts">
+
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content">
+            {{#if urinalysisReady}}
+                {{#if chartReady}}
+                    <div style="overflow: auto; overflow-y: hidden;">
+                        <table style="width: 100%; margin-top: 15px; text-align: center; margin-bottom: 20px;">
+                            <tr>
+                                {{#each analytes}}
+                                    <td>
+                                        <a class="title-analyte" id="isAnalyte" style="{{isSelected analyte}}" href="/charts/{{analyte}}?column={{column}}">
+                                            <div style="padding:10px;">{{analyte}}</div>
+                                        </a>
+                                    </td>
+                                {{/each}}
+                            </tr>
+                        </table>
+                    </div>
+                {{/if}}
+            {{/if}}
+            {{>chartsSub}}
+
+        </div>
+    </div>
+</template>
+
+<template name="chartsSub">
+    <div id="chartdiv" style="width: 100%; height: 85%;"></div>
+</template>
+
+<template name="urinalysisSettings">
+    <div style="height: 43px; width: 100%; margin-top: 9px; position:absolute; z-index: 15;">
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:115px;">New Analyte</div>
+                            <div class="item-input">
+                                <input type="text" name="analyte" id="newAnalyte" class="newUrinalysisSetting" placeholder="Glucose"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:145px;">AU480 Abreviation</div>
+                            <div class="item-input">
+                                <input type="text" name="column" id="newColumn" class="newUrinalysisSetting" placeholder="GLU"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 80px">
+
+            <div class="content-block-title">Analytes</div>
+            {{#if analytesReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each availableAnalytesHere}}
+                            <li class="swipeout">
+                                <div class="swipeout-content item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="text-align: left; width:134px;">Analyte:</div>
+                                        <div class="item-input">
+                                            <input type="text" name="analyte" class="aUrinalysisSetting" style="text-align: left;" value="{{analyte}}"/>
+                                        </div>
+                                        <div class="item-title label" style="text-align: left; width:134px;">Abrv:</div>
+                                        <div class="item-input">
+                                            <input type="text" name="column" class="aUrinalysisSetting" style="text-align: left;" value="{{column}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <!-- Add this button and item will be deleted automatically -->
+                                    <a href="#" class="swipeout-delete" id="{{_id}}">Delete</a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        <li class="swipeout">
+
+                        </li>
+                    </ul>
+                </div>
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+</template>

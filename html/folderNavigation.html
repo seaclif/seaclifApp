@@ -1,0 +1,34 @@
+<template name="folderNavigation">
+        <div class="page-content" style="margin-top: 20px">
+
+            <div style="text-align: left; margin-left: 8px; margin-bottom:10px;"><div name="backTo" style="font-size: medium; color: blue;"> Back to {{previousPageSpecific}}</div></div>
+            {{#if isNotDefaultFolder}}
+                <input type="button" class="button button-big button-fill color-blue upOneLevel" value="Up One Level" style="margin-top: 10px"/>
+            {{/if}}
+            <div class="content-block-title">{{oDriveAlias folderPath}}</div>
+            {{#if foldersAreReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each folder}}
+                            <li>
+                                <div class="item-content">
+                                    <a class="item-link" style="width:100%" name="{{name}}">
+                                        <div class="item-inner" name="{{name}}">
+                                            <div class="item-title" style="padding-left: 20px; width: auto;" name="{{name}}">
+                                                <label style="color:{{colorStatus}};" name="{{name}}">{{name}}</label>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+
+                        {{/each}}
+                    </ul>
+                </div>
+            {{else}}
+                Loading.....
+            {{/if}}
+        </div>
+
+</template>
+

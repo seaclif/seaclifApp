@@ -1,0 +1,127 @@
+<template name="configureInterface">
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content">
+            <div class="content-block-title">Interface Type</div>
+            {{#if interfaceConfigIsReady}}
+                {{#each interfaceConfig}}
+                    <div class="list-block">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Interface Type</div>
+                                        <div class="item-input">
+                                            <label>{{computerTypeHelper this.httpHeaders}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Configure As Type</div>
+                                        <div class="item-input">
+                                            <select class="select" name="configureAs">
+                                                {{#each configOptions}}
+                                                    <option {{configureAsHelper configureAsOption imConfiguredAs}}>{{configureAsOption}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Location</div>
+                                        <div class="item-input">
+                                            <select class="select" name="location" style="width: 150px;">
+                                                {{#if locationsReady}}
+                                                    <option>..</option>
+                                                    {{#each locations}}
+                                                        <option {{locationsSelect location mylocation}}>{{location}}</option>
+                                                    {{/each}}
+                                                {{else}}
+                                                    Loading ...
+                                                {{/if}}
+                                            </select>
+                                        </div>
+                                        <a class="item-after" href="/locations">
+                                            <img src="/img/newLocationIcon.png"
+                                                 style="height: 29px; width:auto; margin-top:-7px">
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {{>computerList}}
+                {{/each}}
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+</template>
+<template name="computerList">
+    {{#if computerListReady}}
+        {{#each controlComputerList}}
+            <div class="content-block-title">{{configureAsOption}}</div>
+            <div class="list-block">
+                {{#if controlComputerReady}}
+                    <ul>
+                        {{#each controlComputer}}
+                            {{>controlComputerConfig}}
+                        {{/each}}
+                    </ul>
+                {{/if}}
+            </div>
+        {{/each}}
+    {{else}}
+        Loading...
+    {{/if}}
+
+</template>
+
+<template name="controlComputerConfig">
+    <li class="swipeout">
+        <div class="item-content swipeout-content">
+            <label class="label-checkbox" style="width: 24px;">
+                <input type="checkbox" name="checkbox" {{ischecked}}>
+
+                <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            </label>
+
+            <a href="/controlComputer/{{_id}}" class="item-link" style="width:100%">
+                <div class="item-inner">
+                    <div class="item-title" style="padding-left: 20px; width: auto;">
+                        <label style="color: {{statusTextColorPi connectionStatus _id}}; width: auto">{{hostname}}</label>
+                        <label style=" font-size: 10px; padding-left: 15px; color:gray;">{{location}}</label>
+                        {{#each clients}}
+                            <label style="color: {{statusTextColor status}}; font-size: small;">{{clientAddress}}</label>
+                        {{/each}}
+
+                    </div>
+                </div>
+            </a>
+
+            <div class="swipeout-actions-right">
+                <a href="" class="bg-red swipeout-close" style="margin-right: -50px" name="delete"
+                   id="{{_id}}">Delete</a>
+            </div>
+            <div class="swipeout-actions-left">
+                <a href="#" class="bg-gray swipeout-close" style="margin-left: -100px" name="clearConnected"
+                   id="{{_id}}">Clear All Connected</a>
+            </div>
+            <div class="item-inner" style="width:30px; display: {{statusColor thisConnectionStatus}}">
+                <div class="item-after"><span class="badge"
+                                              style="background-image: {{statusColor thisConnectionStatus}};">.</span>
+                </div>
+            </div>
+
+        </div>
+    </li>
+</template>

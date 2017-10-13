@@ -1,0 +1,77 @@
+<template name="key">
+    <div data-page="form" class="page" style="height:100%;" >
+
+
+        <div class="list-block" id="contentKeypad" style="text-align: center; width: 100%; height: calc(100% - 17px); margin-top:0px; margin-bottom: 0px; padding:0px; background: #ffffff;">
+            <ul style="padding-left: 30px; padding-right: 30px; margin-top:0px; margin-bottom: 0px;  height:100%; background: #ffffff;">
+                <p style="height: 14px; padding-top: 40px;">{{keyCode}}</p>
+                <li>
+                    <input id="Button1" type="button" value="1" class="keypad i2Style num"/>
+                    <input id="Button2" type="button" value="2" class="keypad i2Style num"/>
+                    <input id="Button3" type="button" value="3" class="keypad i2Style num"/>
+                </li>
+                <li>
+                    <input id="Button4" type="button" value="4" class="keypad i2Style num"/>
+                    <input id="Button5" type="button" value="5" class="keypad i2Style num"/>
+                    <input id="Button6" type="button" value="6" class="keypad i2Style num"/>
+                </li>
+                <li>
+                    <input id="Button7" type="button" value="7" class="keypad i2Style num"/>
+                    <input id="Button8" type="button" value="8" class="keypad i2Style num"/>
+                    <input id="Button9" type="button" value="9" class="keypad i2Style num"/>
+                </li>
+                <li>
+                    <input id="ButtonA" type="button" value="*" class="keypad i2Style num"/>
+                    <input id="Button0" type="button" value="0" class="keypad i2Style num"/>
+                    <input id="ButtonP" type="button" value="#" class="keypad i2Style num"/>
+                </li>
+                <li style="padding-top: 20px; padding-bottom: 0px" >
+                    <a href="/userprofile"><span  id="newUser" class="createAccount" >Create Account</span></a>
+                </li>
+
+
+                <script>
+                    var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+
+                    $('.num').click(function (event) {
+                        //console.log(event.target);
+                        if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+                        else{
+                            userCode.set(event.target.value);
+                        }
+                    });
+
+                    $('.num').on('touchstart', function (event) {
+                        if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                            userCode.set(event.target.value);
+                        }
+                    });
+
+                    $('.createAccount').click(function (event) {
+                        //console.log(event.target);
+                        if(deviceType == 'iPad' || deviceType == 'iPhone') {}
+                        else{
+                            FlowRouter.go('/userprofile');
+                        }
+                    });
+
+                    $('.createAccount').on('touchstart', function (event) {
+                        if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                            FlowRouter.go('/userprofile');
+                        }
+                    });
+                    $('.scan').on('touchstart', function (event) {
+                        if(deviceType == 'iPad' || deviceType == 'iPhone') {
+                            scan();
+                        }
+                    });
+
+                </script>
+            </ul>
+        </div>
+</div>
+</template>
+
+<template name="barcode_scanner">
+    <button>Scan</button>
+</template>

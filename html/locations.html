@@ -1,0 +1,95 @@
+<template name="locations">
+    <div style="height: 43px; width: 100%; margin-top: 9px; position:absolute; z-index: 15; ">
+        <div class="list-block" style="box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><img src="/img/newLocationIcon.png" style="height: 29px; margin-left: -5px; width:auto;"></div>
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:115px;">New Location:</div>
+                            <div class="item-input">
+                                <input type="text" name="newLocation" id="newLocation" placeholder="Description"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $('.icon-back').on('touchstart', function (event) {
+            if (currentSession.deviceType == 'iPad' || deviceType == 'iPhone') {
+                history.back();
+            }
+        });
+
+        $('.icon-back').click(function (event) {
+            if (deviceType == 'iPad' || deviceType == 'iPhone') {
+            }
+            else {
+                history.back();
+            }
+        });
+
+        $('.logout').on('touchstart', function (event) {
+            if (deviceType == 'iPad' || deviceType == 'iPhone') {
+                userCode.logout();
+            }
+        });
+
+        $('.logout').click(function (event) {
+            if (deviceType == 'iPad' || deviceType == 'iPhone') {
+            }
+            else {
+                userCode.logout();
+            }
+        });
+    </script>
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 20px">
+
+            <div class="content-block-title">Locations</div>
+            {{#if locationsReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each locations}}
+                            <li class="swipeout">
+                                <div class="swipeout-content item-content">
+                                    <div class="item-media"><img src="/img/map-marker1.png"
+                                                                 style="height: 25px; width:auto;">
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="text-align: left; width:134px;">Location:
+                                        </div>
+                                        <div class="item-input">
+                                            <input type="tel" name="aLocation" style="text-align: left;"
+                                                   value="{{location}}"/>
+                                        </div>
+                                        <a href="/queue/{{_id}}">
+                                            <div class="item-after"
+                                                 style="width: 100%; padding-left: 10px; padding-right: 10px;"><span
+                                                    class="badgeNormal bg-green">{{numberOfBarcodes}}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <!-- Add this button and item will be deleted automatically -->
+                                    <a href="#" class="swipeout-delete" id="{{_id}}">Delete</a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        <li class="swipeout">
+
+                        </li>
+                    </ul>
+                </div>
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+</template>

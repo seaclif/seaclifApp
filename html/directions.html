@@ -1,0 +1,72 @@
+<template name="directionsRender">
+    {{#if directionsReady}}
+        {{>directions}}
+    {{/if}}
+</template>
+
+<template name="directions">
+<div class="page-content">
+    {{#if isConnectedToPrinter}}
+        <div style="text-align: center; margin-top: 40px" name="{{data}}">
+            <p style="font-size: 18px"> Apply printed label to cup. Fill cup to ~100ml. Then place in the incubator.</p>
+        </div>
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 30vw; text-align: center;">
+                </td>
+                <td style="text-align: center;">
+                    <img id="barcode" name="{{barcodeSt}}" class="barcode {{populateBarcodeObj}}">
+
+                    <div class="picDiv" id="animate-area"><img id="cylinder" name="{{barcodeUser}}"
+                                                               src="/img/peeCupLong1.png"></div>
+                </td>
+                <td style="width: 30vw; text-align: center;">
+                </td>
+
+            </tr>
+        </table>
+        <div style="width: 100%; text-align:center;">
+            <input type="button" id="{{userCode}}"
+                   style="width: 33%; margin: 0 auto; margin-top:-450px; position:relative;"
+                   name="rePrintBarcode" class="button button-big button-fill color-green"
+                   value="Re-Print Barcode">
+        </div>
+    {{else}}
+        <div style="text-align: center; margin-top: 100px;">
+            <span style="width: auto; text-align: center; margin-top: 15px; font-size: 16px; text-transform: uppercase; color: #6d6d72;">
+                Sorry!!!! We are not connected to a printer. Cannot Print right now.</span>
+        </div>
+    {{/if}}
+        <div style="width: 100%; text-align:center;">
+            {{#if hasData}}
+                <a href="/charts">
+                    <input type="button"
+                           style="width: 33%; margin: 0 auto; margin-top: 15px;"
+                           name="rePrintBarcode" class="button button-big button-fill color-yellow"
+                           value="View My Analyte Data">
+                </a>
+            {{/if}}
+        </div>
+    </div>
+
+        <script>
+            var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+
+            $('.printBarcode').click(function () {
+                if (deviceType == 'iPad' || deviceType == 'iPhone') {
+                }
+                else {
+                    printBarcode();
+                }
+            });
+
+            $('.printBarcode').on('touchstart', function () {
+                if (deviceType == 'iPad' || deviceType == 'iPhone') {
+                    printBarcode();
+                }
+            });
+
+        </script>
+
+
+</template>

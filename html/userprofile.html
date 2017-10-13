@@ -1,0 +1,716 @@
+<template name="userprofile">
+    <div class="page-content">
+        <div class="content-block-title">User Info</div>
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-password"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">*Passcode (5 #s)</div>
+                            <div class="item-input">
+                                <table>
+                                    <tr>
+                                        <td><input style="width:85px; margin-left: -5px;" type="{{passwordOrText}}" name="userCode" value="{{generated}}" class="item-input" placeholder="Passcode"
+                                                   pattern="[0-9]*"
+                                                   onKeypress="if(event.keyCode < 48 || event.keyCode > 57){return false;}"/>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="button button-round active {{colorCheck}}" style="width: 32px; height:30px;">✓</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="button button-round" id="generateCode" style="width: 100px; text-align: center; padding-left:-20px; font-size: xx-small">generate one</a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-email"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">*E-mail</div>
+                            <div class="item-input">
+                                <input type="email" name="email" placeholder="E-mail"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Name</div>
+                            <div class="item-input">
+                                <input type="text" name="name" placeholder="Your name"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-tel"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Phone</div>
+                            <div class="item-input">
+                                <input type="tel" name="phone" placeholder="Phone"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Gender</div>
+                            <div class="item-input">
+                                <select class="select" name="gender">
+                                    <option>..</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Race/Ethnicity</div>
+                            <div class="item-input">
+                                <select class="select" name="ethnicity">
+                                    <option>.. </option>
+                                    <option>Hispanic or Latino</option>
+                                    <option>American Indian or Alaska Native</option>
+                                    <option>Asian</option>
+                                    <option>Black or African American</option>
+                                    <option>Native Hawaiian or Other Pacific Islander</option>
+                                    <option>White</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-ethnicity"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Account Type</div>
+                            <div class="item-input">
+                                <select class="select" name="auth">
+                                    <option>.. </option>
+                                    <option>Participant</option>
+                                    <option>{{datalabUser}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Birth date</div>
+                            <div class="item-input">
+                                <input type="date" placeholder="Birth day" name="birthday" class="select" value="2014-04-30"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">Health Conditions</div>
+                            <div class="item-input">
+                                <select multiple class="select" name="healthConditions">
+                                    <option>Check all that apply (cmd, ctl select)</option>
+                                    <option>Asthma</option>
+                                    <option>Anemia</option>
+                                    <option>Heart disease</option>
+                                    <option>High cholesterol/takes cholesterol medication</option>
+                                    <option>Bleeding disorder</option>
+                                    <option>Tuberculosis</option>
+                                    <option>Dental decay</option>
+                                    <option>Cancer</option>
+                                    <option>Liver disease</option>
+                                    <option>Diabetes</option>
+                                    <option>Obesity</option>
+                                    <option>Epilepsy or convulsions</option>
+                                    <option>Alcohol abuse</option>
+                                    <option>Drug abuse</option>
+                                    <option>Mental illness/depression</option>
+                                    <option>Immune problems, HIV, or AIDS</option>
+                                    <option>Tobacco use</option>
+                                    <option>Chickenpox</option>
+                                    <option>Nasal allergies</option>
+                                    <option>Problems with eyes or vision</option>
+                                    <option>Asthma, bronchitis, bronchiolitis, or pneumonia</option>
+                                    <option>Any heart problem or heart murmur</option>
+                                    <option>Anemia or bleeding problem</option>
+                                    <option>Blood transfusion</option>
+                                    <option>HIV</option>
+                                    <option>Organ transplant</option>
+                                    <option>Malignancy/bone marrow transplant</option>
+                                    <option>Chemotherapy</option>
+                                    <option>Frequent abdominal pain</option>
+                                    <option>Constipation requiring doctor visits</option>
+                                    <option>Recurrent urinary tract infections and problems</option>
+                                    <option>Congenital cataracts/retinoblastoma</option>
+                                    <option>Metabolic/Genetic disorders</option>
+                                    <option>Kidney disease or urologic malformations</option>
+                                    <option>Sleep problems</option>
+                                    <option>Chronic or recurrent skin problems (eg, acne, eczema)</option>
+                                    <option>Frequent headaches</option>
+                                    <option>Convulsions or other neurologic problems</option>
+                                    <option>Thyroid or other endocrine problems</option>
+                                    <option>High blood pressure</option>
+                                    <option>ADHD/anxiety/mood problems/depression</option>
+                                    <option>Sexually transmitted infections</option>
+                                    <option>Pregnancy</option>
+                                    <option>(For girls) Problems with her periods</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+<span >
+
+
+        <div class="content-block" style="width: 80%; margin-left: 9%">
+            <div class="content-block-inner">
+
+
+                <div class=WordSection1>
+
+                    <p class=MsoNormal align=center style='margin-right:9.0pt;text-align:center'><b><span
+                            style='font-size:14.0pt;font-family:Tahoma;font-variant:small-caps'>CONSENT
+FORM</span></b><span style='font-size:14.0pt;font-family:Tahoma;font-variant:
+small-caps;color:red'> </span></p>
+
+                    <p class=MsoNormal align=center style='margin-right:9.0pt;text-align:center'><b><span
+                            style='font-family:Tahoma'>&nbsp;</span></b></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>FOR QUESTIONS ABOUT
+THE STUDY, CONTACT: </span></b><span style='font-family:Tahoma'>Ben Swenson,
+COO/Development and Compliance, 2365 Mountain Vista Ln, Provo, UT 84606, (801)
+367-9927</span></p>
+
+                    <p style='margin-right:9.0pt'><b><span style='font-family:Tahoma'>DESCRIPTION:</span></b><span
+                            style='font-family:Tahoma'> You are invited to participate in <span>a research
+study</span> on new ways to analyze urine. The study is necessary to test new
+ways of doing a complete urinalysis where the sensors may or may not be placed
+directly in the toilet. This may include finding new ways to detect even more
+health information from urine. You will be asked to donate urine samples and
+take a survey. The urine sample may be collected by various methods (i.e. in a
+cup, in the toilet.) The urine sample will then be analyzed and the information
+stored digitally. Samples of tissues, cells, blood, or body fluids (hereafter
+referred to as tissues) will be taken or banked for use in current or future
+research.  This includes testing the sample for purposes of collecting genetic
+or other information. This also includes using the data gathered to gather
+additional information. </span></p>
+
+                    <p style='margin:0in;margin-bottom:.0001pt'><u><span style='font-family:Tahoma'>Tissue
+Sampling for Research </span></u></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma'>Research using tissues is
+an important way to try to understand human disease.  You have been given this information
+because the investigators want to include your tissues in a research project
+and because they want to save the samples for future research.  There are
+several things you should know before allowing your tissues to be studied.  </span></p>
+
+                    <p><span style='font-family:Tahoma'>Your tissues will be stored in an
+appropriate manner.</span></p>
+
+                    <p style='margin:0in;margin-bottom:.0001pt'><span style='font-family:Tahoma'>Because
+your samples will not be linked to your name after they are stored, you cannot
+withdraw your consent to the use of the samples after they are taken.  </span></p>
+
+                    <p style='margin:0in;margin-bottom:.0001pt'><span style='font-family:Tahoma'> </span></p>
+
+                    <p class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>RISKS AND BENEFITS:</span></b><span
+                            style='font-family:Tahoma'> There are no foreseeable risks associated with this
+study. The benefits which may reasonably be expected to result from this study
+are to provide additional health data to a wide and diverse population.<span
+                                style='color:red'> </span>We cannot and do not guarantee or promise that you
+will receive any benefits from this study.  </span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><span style='font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>EMPLOYMENT: </span></b><span
+                            style='font-family:Tahoma'>Your decision whether or not to participate in this
+study will not affect your employment/medical care. You will not be penalized
+in any manner for not choosing to participate. You will not receive any
+employment related benefit (i.e. promotions, raises, bonuses) from your
+participation in this study.</span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-size:15.0pt;font-family:Symbol;
+color:red'>&nbsp;</span></b></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>&nbsp;</span></b></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>&nbsp;</span></b></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>&nbsp;</span></b></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>PAYMENTS:</span></b><span
+                            style='font-family:Tahoma'> You will not receive payment for your participation.<span
+                            style='color:red'> </span><span>However, the study reserves the right to offer
+non-monetary incentives.</span></span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><span style='font-family:Tahoma'>Incentives may only be
+offered to U.S. citizens, legal resident aliens, and those who have a work
+eligible visa.  You may need to provide your social security number to receive incentives.</span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'> </p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma'>PARTICIPANT’S
+RIGHTS:</span></b><span style='font-family:Tahoma'> If you have read this form
+and have decided to participate in this project, please understand your
+participation is voluntary and you have the right to withdraw your consent or
+discontinue participation at any time without penalty <span style='color:black'>or
+loss of benefits to which you are otherwise entitled</span>. </span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><span style='font-family:Tahoma'>The results of this
+research study may be presented at scientific or professional meetings or
+published in scientific journals.  However, your identity will not be disclosed<b>.</b></span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><span style='font-family:Tahoma'>You have the right to
+refuse to answer particular questions. </span></p>
+
+                    <b><span style='font-size:18.0pt;font-family:Tahoma;color:black'><br clear=all
+                                                                                         style='page-break-before:always'>
+</span></b>
+
+                    <p align=center style='margin:0in;margin-bottom:.0001pt;text-align:center'><b><span
+                            style='font-size:18.0pt;font-family:Tahoma;color:black'>Authorization To Use
+Your Health Information For Research Purposes</span></b><span style='font-size:
+18.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Because
+information about you and your health is personal and private, it generally
+cannot be used in this research study without your written authorization.  If
+you sign this form, it will provide that authorization.  The form is intended
+to inform you about how your health information will be used or disclosed in
+the study.  Your information will only be used in accordance with this authorization
+form and the informed consent form and as required or allowed by law.  Please
+read it carefully before signing it.  </span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>What is the purpose of this research study and how will my health
+information be utilized in the study?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma'>The
+Purpose of this study is to understand and develop urinalysis techniques and
+technology. Your health information will be used to study the evaluation
+technology, establish health trends, and for any other reason including
+submission to the FDA for the purpose of obtaining approvals.</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>Do I have to sign this authorization form?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>You
+do not have to sign this authorization form.  But if you do not, you will not
+be able to participate in this research study.</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>If I sign, can I revoke it or withdraw from the research later?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>If
+you decide to participate, you are free to withdraw your authorization
+regarding the use and disclosure of your health information (and to discontinue
+any other participation in the study) at any time.  After any revocation, your
+health information will no longer be used or disclosed in the study, except to
+the extent that the law allows us to continue using your information (e.g.,
+necessary to maintain integrity of research).  If you wish to revoke your
+authorization for the research use or disclosure of your health information in
+this study, you must write to: </span><span style='font-size:14.0pt;font-family:
+Tahoma'>Ben Swenson, 2365 Mountain Vista Ln., Provo, UT 84606.</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>What Personal Information Will Be Obtained, Used or Disclosed?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Your
+health information related to this study, may be used or disclosed in
+connection with this research study, including, but not limited to,</span><span
+                            style='font-size:14.0pt;font-family:Tahoma'> urinalysis, health history, body
+metrics, gender, and general demographic information.</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>Who May Use or Disclose the Information?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>The
+following parties are authorized to use and/or disclose your health information
+in connection with this research study:</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:14.0pt;font-family:Tahoma;color:black'>The
+Protocol Director: Ben Swenson</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Research
+Staff</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Regulatory
+agencies</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Authorized
+New Vistas employees</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>&nbsp;</span></b></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>Who May Receive or Use the Information?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>The
+parties listed in the preceding paragraph may disclose your health information
+to the following persons and organizations for their use in connection with
+this research study: </span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>The Office for Human
+Research Protections in the U.S. Department of Health and Human Services</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>The Food and Drug
+Administration</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>New Vistas</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>The National Institutes
+of Health</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>Data Safety Monitoring
+Board</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>Outside Data Analysts</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>The Centers for Disease
+Control</span></p>
+
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
+                            style='font-size:14.0pt;font-family:Symbol;color:black'>·<span
+                            style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'>Outside Technology
+Consultants</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Your
+information may be re-disclosed by the recipients described above, if they are
+not required by law to protect the privacy of the information.</span></p>
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma; color:black'>&nbsp;</span></b></p>
+
+
+                    <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:Tahoma;
+color:black'>When will my authorization expire?</span></b></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>Your
+authorization for the use and/or disclosure of your health information will end
+on </span><span style='font-size:14.0pt;font-family:Tahoma'>December 31, 2040 <span
+                            style='color:black'>or when the research project ends, whichever is earlier.<span>
+</span></span></span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:red'>&nbsp;</span></p>
+
+
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>
+                        <input type="text" class="item-input" name="consentSignature" value="" placeholder="Your Digital Signature"
+                               style="border-top: none;
+                        border-left: none;
+                        border-right:none;
+                        border-bottom: solid;
+                        border-width: 2px;
+                        width: 350px;
+                        font-size:12.0pt;
+                        font-family:Tahoma;
+                        color:black"/>
+                        &nbsp;          
+     </span><span style='font-family:Tahoma;color:black'>
+
+
+                        <input type="text" class="item-input" name="consentDate" value="" placeholder="00/00/0000"
+                               style="border-top: none;
+                                border-left: none;
+                                border-right:none;
+                                border-bottom: solid;
+                                border-width: 2px;
+                                width: 150px;
+                                font-size:12.0pt;
+                                font-family:Tahoma;
+                                color:black"/>
+
+
+                    </span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'><br>
+Signature of Adult P<span>articipant                                           </span>Date</span></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>_______________________________                  
+</span><span style='font-family:Tahoma;color:black'>______________</span><span
+                            style='font-size:14.0pt;font-family:Tahoma;color:black'><br>
+Signature of Legally Authorized Representative (LAR)          Date</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-size:14.0pt;
+font-family:Tahoma'>(e.g., parent, guardian or conservator)</span></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma;color:black'><br>
+<br>
+</span><span style='font-size:14.0pt;font-family:Tahoma;color:black'>________________________________________________________<br>
+LAR’s Authority to Act for P<span>articipant</span></span></p>
+
+                    <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:14.0pt;
+font-family:Tahoma'>(e.g., parent, guardian or conservator)</span></p>
+
+<span style='font-size:14.0pt;font-family:Tahoma;color:black'><br clear=all
+                                                                  style='page-break-before:always'>
+</span>
+
+                    <p class=MsoNormal><span style='font-size:14.0pt;font-family:Tahoma;color:black'>&nbsp;</span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><b><span style='font-family:Tahoma'>WITHDRAWAL
+FROM STUDY</span></b></p>
+
+                    <p class=MsoNormal style='margin-left:.25in'><span style='font-family:Tahoma'>The
+Protocol Director may also withdraw you from the study<span style='color:red'> </span>without
+your consent for one or more of the following reasons: </span></p>
+
+                    <ul style='margin-top:0in' type=disc>
+                        <ul style='margin-top:0in' type=circle>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>Failure
+      to follow the instructions of the Protocol Director and study staff.</span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>The
+      Protocol Director decides that continuing your participation could be
+      harmful to you.</span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>Pregnancy
+      </span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>You
+      need treatment not allowed in the study.</span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>The
+      study is cancelled. </span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>Other
+      administrative reasons.</span></li>
+                            <li class=MsoNormal style='margin-right:.5in'><span style='font-family:Tahoma'>Unanticipated
+      circumstances.</span></li>
+                        </ul>
+                    </ul>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-family:Tahoma;text-transform:uppercase'>Contact
+Information</span></b><b><span style='font-family:Tahoma'>: </span></b></p>
+
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:9.0pt;margin-bottom:
+0in;margin-left:0in;margin-bottom:.0001pt'><span style='font-family:Tahoma;
+color:red'><br>
+</span><span style='font-family:Tahoma'>Questions, Concerns, or Complaints: If
+you have any questions, concerns or complaints about this<b> </b><span>research
+study</span>, its procedures, risks and benefits, or alternative courses of
+treatment, you should ask the Protocol Director,<span style='color:red'> </span>Ben
+Swenson You may contact him/her now or later at<span style='color:red'> </span>(801)
+367-9927 </span></p>
+
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:9.0pt;margin-bottom:
+0in;margin-left:0in;margin-bottom:.0001pt'><span style='font-family:Tahoma'>Injury
+Notification: If you feel you have been <span>hurt by being a part of this
+study</span>, please contact the Protocol Director, Ben Swenson at<span
+                                style='color:red'> </span>(801)367-9927 </span></p>
+
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:9.0pt;margin-bottom:
+0in;margin-left:0in;margin-bottom:.0001pt'><s><span style='font-family:Tahoma;
+color:red'><span style='text-decoration:none'>&nbsp;</span></span></s></p>
+
+                    <p><b><span style='font-family:Tahoma'>EXPERIMENTAL SUBJECTS BILL OF RIGHTS:</span></b><span
+                            style='font-family:Tahoma'> As a research <span>participant</span> you have the
+following rights.  These rights include but are not limited to the <span>participant</span>'s
+right to:</span></p>
+
+                    <ul style='margin-top:0in' type=disc>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be informed of the nature
+     and purpose of the experiment; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given an explanation
+     of the procedures to be followed in the medical experiment, and any drug
+     or device to be utilized; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given a description of
+     any attendant discomforts and risks reasonably to be expected; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given an explanation
+     of any benefits to the subject reasonably to be expected, if applicable; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given a disclosure of
+     any appropriate alternatives, drugs or devices that might be advantageous
+     to the subject, their relative risks and benefits;</span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be informed of the
+     avenues of medical treatment, if any available to the subject after the
+     experiment if complications should arise; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given an opportunity
+     to ask questions concerning the experiment or the procedures involved; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be instructed that consent
+     to participate in the medical experiment may be withdrawn at any time and
+     the subject may discontinue participation without prejudice; </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given a copy of the
+     signed and dated consent form; and </span></li>
+                        <li class=MsoNormal><span style='font-family:Tahoma'>be given the opportunity
+     to decide to consent or not to consent to a medical experiment without the
+     intervention of any element of force, fraud, deceit, duress, coercion or
+     undue influence on the subject's decision.</span></li>
+                    </ul>
+
+                    <p style='margin-right:9.0pt'><span style='font-family:Tahoma'>The extra copy
+of this signed and dated consent form is for you to keep.</span></p>
+
+                    <p style='margin-right:9.0pt'><span style='font-family:Tahoma'>________________________________                                  ________________<br>
+Signature of Adult Participant</span><span style='font-family:Tahoma'>&nbsp;                                                 Date</span></p>
+
+                    <p class=MsoNormal style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;
+margin-left:-27.0pt;margin-bottom:.0001pt'><i><span style='font-family:Tahoma'>&nbsp;</span></i></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>_____________________________________             
+        ____________        </span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>Signature
+of Legally Authorized Representative (LAR)                   Date </span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>(e.g.,
+parent, guardian or conservator)                                      </span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>_____________________________________</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>LAR’s
+Authority to Act for Participant            </span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>(e.g.,
+parent, guardian or conservator)</span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><span style='font-family:Tahoma'>         </span></p>
+
+                    <p class=MsoNormal style='margin-top:0in;margin-right:9.0pt;margin-bottom:0in;
+margin-left:-27.0pt;margin-bottom:.0001pt'><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>_____________________________________             
+        ____________ </span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>(If
+available) Signature of Other Parent or Guardian                       Date     
+</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>                     
+</span></p>
+
+                    <p class=MsoNormal style='margin-right:-.75in'><span style='font-family:Tahoma'>_____________________________________</span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><span style='font-family:Tahoma'>Authority
+to Act for Participant   </span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal><span>_________________________________________                   ______________       
+</span></p>
+
+                    <p class=MsoNormal><span style='font-family:Tahoma'>Signature of Person
+Obtaining Consent</span><span style='font-family:Tahoma'>                                       Date</span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><span style='font-family:Tahoma;
+color:red'>&nbsp;</span></p>
+
+                    <p class=MsoPlainText><span style='font-family:Tahoma'>&nbsp;</span></p>
+
+                    <p class=MsoNormal style='margin-right:9.0pt'><span style='font-size:10.0pt;
+font-family:Tahoma'>&nbsp;</span></p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p style="color: red; font-size: large;">{{validCreateUser}}</p>
+            <div class="row">
+                <div class="col-50"><a href="#" id="cancelForm" class="button button-big button-fill color-red">Cancel</a></div>
+                <div class="col-50">
+
+                    <input type="submit" id="submitForm" value="Submit" class="button button-big button-fill color-green"/>
+                </div>
+            </div>
+
+        </div>
+        <div style="height: 300px"></div>
+    </span>
+    </div>
+
+</template>

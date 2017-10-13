@@ -1,0 +1,217 @@
+<template name="importData">
+
+    {{#if importDataReady}}
+        {{#with importSettings}}
+            <div id="title-top" style="height: auto; width: 100%; margin-top: 30px; margin-bottom: -30px; position:absolute; z-index: 15; background-color: #efeff4;">
+                <div class="content-block-title">Import Data</div>
+
+                <div class="row" style="margin-top:-30px; margin-bottom: -20px; text-align: right">
+                    <div style="margin-top: 0px; width:60%;"></div>
+                    <input type="button" id="flowcontrol"
+                           class="button color-lightblue button-fill usbcontrol"
+                           name="importDataBtn" value="{{importDataBtn}}"
+                           style="margin-top: 0px; width:32%;"/>
+                    {{#if importGSheetDisplay importToDatabase}}
+                        <input type="button" id="flowcontrol"
+                               class="button color-green button-fill usbcontrol"
+                               name="importGSheet" value="{{importGSheet}}"
+                               style="margin-top: 0px; width:32%;"/>
+                    {{/if}}
+
+                </div>
+
+                <div class="list-block" style="margin-bottom: -30px; box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.1);">
+                    <ul style="margin-bottom: 0px; padding-bottom: 0px">
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">To Database</div>
+                                    <div class="item-input">
+                                        <select class="select" name="importToDatabase">
+                                            <option>..</option>
+                                            {{#each databaseOptions}}
+                                                <option {{selected}}>{{alias}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="item-after"
+                                         style=" padding-left: 10px; padding-right: 10px;"><span
+                                            class="badgeNormal bg-green">{{dbCount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">File Extension</div>
+                                    <div class="item-input">
+                                        <input type="text" class="importData" name="importFileType"
+                                               value="{{importFileType}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{#if importSpectra importToDatabase}}
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" id="spectroLabel">Spectrometer:</div>
+                                        <div class="item-input">
+                                            <select class="selectSpectrometer" name="spectrometer" id="spectrometer">
+                                                {{#each spectrometerOptions}}
+                                                    <option {{selectedSpectrometer spectrometer}}>{{spectrometer}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Scan Duration:</div>
+                                        <div class="item-input" style="width: 80px;">
+                                            <select class="scanSelect" name="scanDuration" id="scanDuration">
+                                                {{#each availableScanDurations scanDuration}}
+                                                    <option {{ifSelected}}>{{scanDuration}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="item-input">
+                                            <select class="scanSelect" name="scanDurationUnits" id="scanDurationUnits">
+                                                {{#each availableScanDurationUnits scanDurationUnits}}
+                                                    <option {{ifSelected}}>{{scanDurationUnits}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+            <div data-page="form" class="page" style="height:100%;">
+                {{#if importSpectra importToDatabase}}
+                    <div style="height: 215px"> </div>
+                {{else}}
+                    <div style="height: 130px"> </div>
+                {{/if}}
+            <div class="page-content">
+                {{#if errorsFromImport}}
+                    <div class="content-block-title">Errors from Import</div>
+                    <div>
+                       <textarea rows="20" cols="70" class='modifyEntry' style="margin-left:15px; border:none; font-size: 14px; font-family:Arial; border-style: none; padding: 10px;">{{errorsFromImport}}</textarea>
+                    </div>
+
+                {{/if}}
+                    <div class="content-block-title" name="choosePath">{{oDriveAlias folderPath}}</div>
+                    <div class="list-block">
+                        <ul>
+                            {{#each files}}
+                                <li>
+                                    <div class="item-content">
+                                        <label class="label-checkbox" style="width: 24px;">
+                                            <input type="checkbox" name="checkbox" {{ischecked}}>
+
+                                            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                        </label>
+
+                                        <div style="width:100%" name="{{name}}">
+                                            <div class="item-inner" name="{{name}}">
+                                                <div class="item-title" style="padding-left: 20px; width: auto;"
+                                                     name="{{name}}">
+                                                    <label style="color:{{colorStatus}};"
+                                                           name="{{name}}">{{name}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            {{/each}}
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        {{/with}}
+    {{/if}}
+</template>
+
+
+<template name="spectrometerSettings">
+    <div style="height: 43px; width: 100%; margin-top: 9px; position:absolute; z-index: 15;">
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:115px;">New Spectrometer</div>
+                            <div class="item-input">
+                                <input type="text" name="spectrometer" id="newSpectrometer"
+                                       class="newSpectrometerSetting" placeholder="Newest Spectrometer"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label" style="text-align: left; width:145px;">Spectrometer ID:</div>
+                            <div class="item-input">
+                                <input type="text" name="spectrometerID" id="newSpectrometerID"
+                                       class="newSpectrometerSetting" placeholder="500240535-35252U"
+                                       style="text-align: left;"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-page="form" class="page" style="height:100%;">
+        <div class="page-content" style="margin-top: 80px">
+
+            <div class="content-block-title">Spectrometers</div>
+            {{#if spectrometersReady}}
+                <div class="list-block">
+                    <ul>
+                        {{#each availableSpectrometers}}
+                            <li class="swipeout">
+                                <div class="swipeout-content item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="text-align: left; width:134px;">
+                                            Spectrometer:
+                                        </div>
+                                        <div class="item-input">
+                                            <input type="text" name="spectrometer" class="aSpectrometerSetting"
+                                                   style="text-align: left;" value="{{spectrometer}}"/>
+                                        </div>
+                                        <div class="item-title label" style="text-align: left; width:134px;">ID:</div>
+                                        <div class="item-input">
+                                            <input type="text" name="spectrometerID" class="aSpectrometerSetting"
+                                                   style="text-align: left;" value="{{spectrometerID}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <!-- Add this button and item will be deleted automatically -->
+                                    <a href="#" class="swipeout-delete" id="{{_id}}">Delete</a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        <li class="swipeout">
+
+                        </li>
+                    </ul>
+                </div>
+            {{else}}
+                Loading ...
+            {{/if}}
+        </div>
+    </div>
+</template>

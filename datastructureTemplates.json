@@ -1,0 +1,261 @@
+[{"option":"file"},{"option":"parameter"},{"option":"module"},{"option":"date"},{"option":"data"},{"option":"timestamps"}],
+[{option:"file"},{"option":"parameter"},{"option":"module"},{"option":"date"},{"option":"data"},{"option":"timestamps"}]
+[
+  //collection usbdata
+  {
+    "_id": "sdasdfkjhsdlf",
+    "pi": "ras pi id",
+    "location": "Bay 3 Bathroom 2",
+    "prox": [
+      {
+        "dateTime": "data"
+      }
+    ],
+    "rgb": [
+      {
+        "dateTime": "data"
+      }
+    ]
+  },
+  {
+    "_id": "sdasdfkjhsdlf",
+    "pi": "ras pi id",
+    "location": "Bay 3 Bathroom 1",
+    "prox": [
+      {
+        "dateTime": "data"
+      }
+    ],
+    "rgb": [
+      {
+        "dateTime": "data"
+      }
+    ]
+  },
+  //collection urinalysis
+  {
+    "_id": "lkfjewiojfiowef",
+    "filename": "something.csv",
+    "filePath": "/O:/audata",
+    "type": "au480",
+    "urineBarcode": "User 4 1234",
+    "user": "User 4",
+    "dateTime": "Date()",
+    //get this from .csv date and time from barcode
+    "columns": [],
+    "data": []
+  },
+  {
+    "_id": "sdlfkjsdfs",
+    "filename": "exhaust_gui.x",
+    "filePath": "/opt/modules/exhaust/exhaust_gui.x",
+    "softwareVersion": "exhaustModuleSW.tar.gz",
+    "repo": "modules/master",
+    "gui": [
+      {
+        "exhaust1": [
+          {
+            "fan": {
+              "label": "Turn Fan on/off",
+              "button": [
+                {
+                  "value": "ON",
+                  "color": "color-blue"
+                },
+                {
+                  "value": "OFF",
+                  "color": "color-red"
+                }
+              ]
+            }
+          },
+          {
+            "label": "PWM",
+            "txtBox": {
+              "fanPWM": "value"
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  {crossComm:[{numID:1, keyword: "send me", port: "MOX"}]}
+  //collection queryTemplates
+  {
+    "_id": "werldfkjsdf",
+    "templateName": "My Template",
+    "dbs":["spectraDB", "serialPortData"],
+    "filenames":[]
+  },
+  { "_id": 'QtF73NeaXsn7wuEtx',
+    "row": 1,
+    "value": 'OFF',
+    "bool": ['ON', 'OFF'],
+    "module": 'exhaust1',
+    "mButton": 'Fan',
+    "labelStyle": 'width: 35px;',
+    "inputStyle": 'width: 150px;'
+  }
+,
+  {
+    _id: 'dunybjjgNtEEoWW8n',
+    mSelect: 'PEZ',
+    module: 'exhaust1',
+    row: 1,
+    options:
+    [
+      'blue sugar',
+      'red sugar',
+      'yellow square'
+    ],
+    value: 'yellow square'
+  }
+,
+  {
+    _id: 'fZyDdP8v4NTTeGF58',
+    mSelect: 'Fizz',
+    module: 'exhaust1',
+    row: 1,
+    options:
+    [
+      'blue sugar',
+      'red sugar',
+      'yellow square'
+    ],
+    value: 'blue sugar'
+  }
+,
+  {
+    _id: '8azsFWvwFcXJEaRXG',
+    mStatic: 'Software Version',
+    module: 'exhaust1',
+    row: 2,
+    value: 'Module Control Exaust v2.43'
+  }
+,
+  {
+    _id: 'PkkC7pH47YhvCZKdD',
+    row: 1,
+    module: 'exhaust1',
+    mSend: 'Duty Cycle',
+    placeholder: '20 kHZ',
+    value: '30 kHz'
+  }
+,
+  {
+    _id: 'wMrmvom9xdvMpwb4X',
+    row: 1,
+    module: 'exhaust1',
+    mSend: 'PWM',
+    placeholder: '50',
+    value: '60',
+    inputStyle: 'width: 50px;'}
+]
+
+[{searchBy:[{select:[{chosen:'serialportsData', type: 'databases', tID: Math.random()}, {chosen:'spectraDB', type: 'databases', tID: Math.random()}]},
+{select:[{chosen: 'user', db: 'serialportsData', type:'fields', tID: Math.random()}]
+}]
+var distinctEntries = _.uniq(urinalysis.find({}, {sort: {user:1}, fields: {user:true}}).fetch().map(function(x) {return x.user;}), true);
+_.uniq(urinalysis.find({}, {sort: {user:1}, fields: {user:true}}).fetch().map(function(x) {return x;}), true);
+searchBy:[
+  {chosen:'serialportsData', type: 'databases', query: '{}', tID: Math.random(), queries:[
+    {select:[
+        {chosen: 'user', db: 'serialportsData', type:'fields', query:{}, tID: Math.random()},
+        {chosen: 'User 4', db: 'serialportsData', type:'values', query: {}, tID: Math.random()}
+    ]
+  },
+  {chosen:'spectraDB', type: 'databases', tID: Math.random()
+  }
+]
+
+databases:[
+  {"chosen":"serialportData", "type": "databases", "query": "{}", "tID": Math.random()},
+  {"chosen":'spectraDB', "type": 'databases', "tID": Math.random(), "query": '{}'}
+]
+queries:[{"chosen": 'user', "db": 'serialportData', "type":'fields', "query":'{}', "tID": Math.random()},
+{"chosen": 'User 4', "db": 'serialportData', "type":'values', "query": '{}', "tID": Math.random()}]
+
+urinalysis.find({$and:[{user: 'USER 5'}, {dateTime: : Date('Wed Nov 18 2015 11:08:00 GMT-0700 (MST)')}]}, {fields:{user:1, _id:0, dateTime:1}}).fetch()
+
+
+
+urinalysis.find({user: 'USER 5', dateTime: Date('Wed Nov 18 2015 11:08:00 GMT-0700 (MST)')}, {fields:{user:1, _id:0, dateTime:1}}).fetch()
+
+urinalysis.find({user: 'USER 5', dateTime: : {'$gte': new Timestamp(new Date(2012, 0, 21), 0), '$lte': new Timestamp(new Date(2017, 0, 22), 0)}}, {fields:{user:1, _id:0, dateTime:1}}).fetch()
+urinalysis.find({dateTime: : {$gte: new Date(2012, 0, 21), 0)}}).fetch() //$lte: new Timestamp(new Date(2017, 0, 22), 0)
+
+urinalysis.find({dateTime: {$gt: new Date('Wed Nov 18 2015 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2015 11:10:00 GMT-0700 (MST)')}}).fetch()[0]
+urinalysis.find({$and:[{dateTime: {$gt: new Date('Wed Nov 18 2015 11:00:00 GMT-0700 (MST)')}}, {dateTime: {$lt: new Date('Wed Nov 18 2015 11:10:00 GMT-0700 (MST)')}}]}).fetch()[0]
+urinalysis.find({dateTime: {$gt: new Date('Wed Nov 18 2015 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2015 11:10:00 GMT-0700 (MST)')}}).fetch()[0]
+urinalysis.find({dateTime: {$gt: new Date('Wed Nov 18 2015 11:00:00 GMT-0700 (MST)')}}, {fields:{dateTime:1, _id:0}}).fetch()[0]
+urinalysis.find({dateTime: {$gt: new Date('Wed Nov 18 2015 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2015 11:20:00 GMT-0700 (MST)')}}, {fields:{dateTime:1, _id:0}}).count()
+
+urinalysis.find({dateTime: {$gt: new Date('Wed Nov 17 2015 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2015 11:20:00 GMT-0700 (MST)')}}, {fields:{dateTime:1, _id:0, user:1}}).fetch()
+
+urinalysis.find({}, {sort: {dateTime:1}, fields:{dateTime:1, _id:0, user:1}}).fetch()[0]
+
+
+urinalysis.find({$or:[{user: 'USER 5'}, {user:'USER 25'}], dateTime: {$gt: new Date('Wed Nov 17 2014 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2016 11:20:00 GMT-0700 (MST)')}}, {fields:{user:1, _id:0, dateTime:1}}).count()
+
+dateTime:{$gt: new Date('Wed Nov 17 2014 11:00:00 GMT-0700 (MST)'), $lt: new Date('Wed Nov 18 2016 11:20:00 GMT-0700 (MST)')}},
+
+serialportData.find({'data.prox.adc.x[0]':'1458445147757'}).fetch()
+
+serialportData.find({}, {fields:{'data.prox':1}}).fetch()
+
+serialportData.update({_id: '/dev/cu.usbmodem1411'}, {$set:{'data.prox.adc.x[0]':{dateTime: new Date()}, 'data.prox.adc.y':{data:23234}}})
+
+
+
+serialportData.find({ 'data.prox.rgb.x': { $elemMatch: { $gte: new Date(1458445148750)} } }).count()
+serialportData.find({ 'data.prox.rgb.x': { $elemMatch: { $gte: 1458445148740, $lt: 1458445148751 } } }).fetch()[0].data.prox.rgb.x[0]
+serialportData.find({ 'data.prox.rgb.x.0': { $gte: 1458445148740, $lt: 1458445148751 }}).fetch()[0].data.prox.rgb.x[0]
+serialportData.find({ 'data.prox.rgb.x.0': { $gte: 1458445148740, $lt: 1458445148751 }}, {fields:{'data.prox':1, _id:0}}).fetch()[0]
+
+
+
+urinalysis.find({}, {sort: {dateTime:1}, fields:{'stats.mtime':1, '_id':0, 'user':1}}).fetch()[0]
+urinalysis.find({}, {'stats.mtime':1, '_id':0, 'user':1}).fetch()[0]
+db.scores.find({ 'data.prox.rgb': { $elemMatch: { $gte: 80, $lt: 999999 } } })
+urinalysis.aggregate([{$unwind:"stats"}, {$match:{"stats.nlink":1}}]) //{$project:{"array.name":1, extra:1}}
+
+importData
+serialportData
+{_id:'2342353525',
+ port:'/dev/ttyUSB0',
+ date:145524634636,
+ module: 'mox',
+ type: 'arduino'
+ parameter: 'F',
+ data: [234, ..],
+ timestamps:[1423514534634, ..]
+}
+
+{database:'serialportData',
+ searchField: 'parameter',
+ searchVal: 'prox',
+ availableValues: [],
+ availableFields:[],
+}
+
+{_id:'2342353525',
+toilet: 'Bay 3 Bathroom 1',
+timestamp:145524634636,
+filename:
+mox:{pwm:2355, T:23552: H:352}
+mox2:{}
+{_id: '2352098e5254', toilet:"Bay 3 Bathroom 1", filename: 'Bathroom thisfsdlkfisjd', 1452463434634 :{mox:{pwm: 123, T: 235}, mox2:{pwm: 123, T: 235}}
+
+
+//index date mongodb field for optimization
+serialportData._ensureIndex({parameters:1})
+
+Meteor.call('uniqueQueryValues', 'serialportData.find({}, {fields:{_id:0, "parameter":1}, sort:{parameter:1}})', 'parameter', function(err, result){console.log(result)});
+
+Meteor.call('uniqueQueryValues', 'serialportData', 'serialportData.find({}, {fields:{_id:0, file:1}, sort: {file:1}})', 'file', function(err, result){console.log(err, result)});
+
+Meteor.call('uniqueQueryValues', 'serialportData', 'serialportData.find({$or:[{module:""}]}, {fields:{_id:0,module:1}, sort:{module:1}})', 'module', function(err, result){console.log(err, result)});
+
+
+user: 'User 1', number: 2, location: 'bathroom', display: 'show', dateTime: Thu May 25 2016 10:14:35 GMT-0600 (MDT)
